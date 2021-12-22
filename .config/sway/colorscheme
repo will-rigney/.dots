@@ -1,0 +1,58 @@
+## Base16 Giger theme
+# Author: Will Rigney (wrign.xyz)
+
+# coffee
+set $tundora #41393F
+# light grey
+set $shady_lady #AEACAE
+# tan
+set $zorba #A4978A
+# khaki
+set $lemon_grass #939492
+
+# darkest
+set $giger1	#221D21
+# darker
+set $giger2	#383135
+# dark
+set $giger3	#514B4E
+# light
+set $giger4	#716B6B
+# lighter
+set $giger5	#928E8D
+# lightest
+set $giger6	#B6B6B4
+
+## all the colours
+#
+# Default Background
+set $base00 $giger1
+# Lighter Background (Used for status bars, line number and folding marks)
+set $base01 $giger2
+# Selection Background
+set $base02 $tundora
+# Comments, Invisibles, Line Highlighting
+set $base03 $giger4
+# Dark Foreground (Used for status bars)
+set $base04 $giger4
+# Default Foreground, Caret, Delimiters, Operators
+set $base05 $giger6
+# set $base06 #e8e8e8			# Light Foreground (Not often used)
+# Light Background (Not often used)
+set $base07 $giger5
+# Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+set $base08 $zorba
+# Integers, Boolean, Constants, XML Attributes, Markup Link Url
+# set $base09 #dc9656			
+# Classes, Markup Bold, Search Text Background
+# set $base0A #f7ca88			
+# Strings, Inherited Class, Markup Code, Diff Inserted
+# set $base0B #a1b56c
+# Support, Regular Expressions, Escape Characters, Markup Quotes
+# set $base0C #86c1b9
+# Functions, Methods, Attribute IDs, Headings
+set $base0D $zorba	
+# Keywords, Storage, Selector, Markup Italic, Diff Changed
+# set $base0E #ba8baf
+# Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
+# set $base0F #a16946
