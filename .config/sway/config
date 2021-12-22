@@ -25,8 +25,10 @@ set $term alacritty
 
 # application launcher
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 5
+
 set $menu $term --class=launcher -e swaymsg-launcher-desktop
-# (don't forget- need to have this script somewhere in path)
+
+set $menu exec $term --class=launcher -e $HOME/Development/sway-launcher-desktop/sway-launcher-desktop.sh
 
 # steam always floating
 for_window [class="Steam"] floating enable
