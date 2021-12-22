@@ -86,10 +86,6 @@ vim.api.nvim_set_keymap('n', '<leader>fS', '<cmd>Telescope lsp_workspace_symbols
 
 vim.api.nvim_set_keymap('n', '<leader>fgb', '<cmd>Telescope git_branches<cr>', opts)
 
-vim.diagnostic.config({
-  virtual_text = false, -- Turn off inline diagnostics
-})
-
 -- automatically show all diagnostics on the current line in a floating window.
 vim.cmd('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
 vim.o.updatetime = 300
@@ -187,6 +183,12 @@ require "paq" {
 --   terminal_colors = true, -- Configure the colors used when opening :terminal
 -- })
 -- require('nightfox').load()
+
+-- config for diagnostics (doesn't know what this is without Paq)
+vim.diagnostic.config({
+  virtual_text = false, -- Turn off inline diagnostics
+})
+
 
 require('doom-one').setup({
 	cursor_coloring = true,
