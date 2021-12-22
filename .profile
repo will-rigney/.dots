@@ -17,6 +17,6 @@ export PATH=$HOME/bin:$PATH
 export GTK_THEME=Arc:dark
 
 # run sway on tty1 login
-if [ "$(tty)" = "/dev/tty1"]; then
+if [ "$(tty)" = "/dev/tty1" ]; then
 	exec sway
 fi

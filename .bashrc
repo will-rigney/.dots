@@ -31,5 +31,9 @@ alias la='ls -la'
 # alias for "dots" managing dots
 alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 
+# sway launcher desktop
+alias swaymsg-launcher-desktop='swaymsg exec "$($HOME/Development/sway-launcher-desktop/sway-launcher-desktop.sh)"'
+
 # starship prompt
 eval "$(starship init bash)"
+#!/usr/bin/env bash
