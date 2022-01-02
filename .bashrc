@@ -1,32 +1,34 @@
 # .bashrc
 
-# If not running interactively, don't do anything
+# if not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# using starship instead
+# PS1 (use starship instead anyway)
 PS1='[\u@\h \W]\$ '
-
-# todo: the ps2?
 
 . "$HOME/.cargo/env"
 
-# pnpm exports
-export PNPM_HOME="/home/will/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
-# set title dynamically
+# set window title dynamically
 case ${TERM} in
  alacritty)
 	PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
 	;;
 esac
 
+# todo: should aliases be here or .profile
+# should move to zsh
 shopt -s expand_aliases
 
 # alias
+# todo: more & better
 alias ls='ls --color=auto'
 alias v='nvim'
-alias la='ls -la'
+alias la='ls -lsa'
+
+# todo: name
+change-wal () {
+	wal --backend schemer2 -i $1 --saturate 0.4 -b "#282c34"
+}
 
 # alias for "dots" managing dots
 alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
@@ -36,4 +38,6 @@ alias swaymsg-launcher-desktop='swaymsg exec "$($HOME/Development/sway-launcher-
 
 # starship prompt
 eval "$(starship init bash)"
-#!/usr/bin/env bash
+
+# pywal terminal colourscheme
+(cat ~/.cache/wal/sequences &)

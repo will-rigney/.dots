@@ -25,4 +25,7 @@ font:
     family: Sauce Code Pro Nerd Font Mono
     style: Bold Italic Mono
 
-  size: 12.5
+  size: 12
+
+  offset:
+    y: 1

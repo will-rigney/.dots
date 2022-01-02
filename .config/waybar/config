@@ -3,69 +3,21 @@
 ////////////////////////////
 
 {
-    // "layer": "top", // Waybar at top layer
-    "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 32, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    // Choose the order of the modules
+    "layer": "top", 		// top layer, over windows
+    "position": "bottom", 	// position (top|bottom|left|right)
+    // "height": 32, 			// height (remove for auto height)
+
+    // order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
     "modules-center": ["sway/window"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "battery", "battery#bat2", "clock", "tray"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "battery", "tray", "clock"],
 
-    // Modules configuration
+    // modules configuration
     "sway/workspaces": {
         "disable-scroll": true,
 	},
-    //    "all-outputs": true,
-    //    "format": "{name}: {icon}",
-    //     "format-icons": {
-    //         "1": "",
-    //         "2": "",
-    //         "3": "",
-    //         "4": "",
-    //         "5": "",
-    //         "urgent": "",
-    //         "focused": "",
-    //         "default": ""
-    //     }
-    // },
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 2,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -75,7 +27,7 @@
         }
     },
     "tray": {
-        // "icon-size": 21,
+        "icon-size": 14,
         "spacing": 10
     },
     "clock": {
@@ -87,30 +39,27 @@
         "tooltip": true
     },
     "memory": {
-        "format": "memory: {}%"
+        "format": "ram: {}%"
     },
-	/* "disk": { */
-	/* 	"format": "free space: {}" */
-	/* } */
+	"disk": {
+		"format": "space: {}"
+	},
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C {icon}",
         "format": "temp: {temperatureC}°C",
-        "format-icons": ["", "", ""]
     },
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        // "format-wifi": "wifi - {essid} ({signalStrength}%) ",
+        "format-wifi": "wifi: {signalStrength}%",
         "format-ethernet": "eth - {ifname}: {ipaddr}/{cidr}",
-        "format-linked": "linked - {ifname} (No IP)",
-        // "format-disconnected": "network disconnected ⚠",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-linked": "no ip - {ifname}",
+        "format-disconnected": "as god intended",
+        "format-alt": "{essid}({ifname}): {ipaddr}/{cidr}"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "volume: {volume}% {format_source}",
+        "format": "vol: {volume}% {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
@@ -127,16 +76,49 @@
         },
         "on-click": "pavucontrol"
     },
+	"backlight": {
+		"format": "bl: {percent}%"
+	},
+	"battery": {
+		"format": "batt: {capacity}%",
+		"states": {
+			"warning": 15,
+			"critical": 5
+		},
+	},
     "custom/media": {
-        "format": "{icon} {}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
-        "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+		"format": "{icon} {}",
+		"return-type": "json",
+		"max-length": 40,
+		"format-icons": {
+		    "spotify": "",
+		    "default": "🎜"
+		},
+		"escape": true,
+		"exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+		// "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     }
 }
+
+/* SUPPORTED MODULES */
+/*        •   waybar-backlight(5) */
+/*        •   waybar-battery(5) */
+/*        •   waybar-bluetooth(5) */
+/*        •   waybar-clock(5) */
+/*        •   waybar-cpu(5) */
+/*        •   waybar-custom(5) */
+/*        •   waybar-disk(5) */
+/*        •   waybar-idle-inhibitor(5) */
+/*        •   waybar-keyboard-state(5) */
+/*        •   waybar-memory(5) */
+/*        •   waybar-mpd(5) */
+/*        •   waybar-network(5) */
+/*        •   waybar-pulseaudio(5) */
+/*        •   waybar-river-tags(5) */
+/*        •   waybar-states(5) */
+/*        •   waybar-sway-mode(5) */
+/*        •   waybar-sway-window(5) */
+/*        •   waybar-sway-workspaces(5) */
+/*        •   waybar-wlr-taskbar(5) */
+/*        •   waybar-temperature(5) */
+/*        •   waybar-tray(5) */
