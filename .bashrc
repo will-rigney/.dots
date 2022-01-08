@@ -16,28 +16,36 @@ case ${TERM} in
 esac
 
 # todo: should aliases be here or .profile
-# should move to zsh
 shopt -s expand_aliases
 
-# alias
-# todo: more & better
-alias ls='ls --color=auto'
-alias v='nvim'
-alias la='ls -lsa'
+## alias
 
-# todo: name
+# fancy ls
+alias ls='exa -Fl --no-permissions --no-user'
+alias la='exa -Flha'
+
+# use wal to update wallpaper * terminal colours
 change-wal () {
-	wal --backend schemer2 -i $1 --saturate 0.4 -b "#282c34"
+	wp=$1;
+	backend=${2:-1};
+	if [ 2 = $backend ];
+	then
+		backend="schemer2";
+	else
+		backend="pywal"
+	fi
+	echo "Using backend: $backend";
+	wal --backend $backend -i $wp --saturate 0.5 -b "#282c34";
 }
 
 # alias for "dots" managing dots
-alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME';
 
-# sway launcher desktop
-alias swaymsg-launcher-desktop='swaymsg exec "$($HOME/Development/sway-launcher-desktop/sway-launcher-desktop.sh)"'
+# rust ugdb
+alias rugdb='ugdb --gdb rust-gdb --nh';
 
 # starship prompt
-eval "$(starship init bash)"
+eval "$(starship init bash)";
 
 # pywal terminal colourscheme
 (cat ~/.cache/wal/sequences &)

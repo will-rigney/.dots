@@ -6,7 +6,7 @@ window:
     x: 0
     y: 0
 tabspaces: 4
-background_opacity: 1.0
+background_opacity: 0.9
 dynamic_title: true
 font:
   normal:

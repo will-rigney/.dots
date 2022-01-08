@@ -22,8 +22,8 @@ export PATH="$PNPM_HOME:$PATH"
 export GOPATH="$HOME/dev/go"
 export PATH="$HOME/dev/go/bin:$PATH"
 
-# gtk theme
-# export GTK_THEME=Arc:dark
+# add jdk17 to path (yes ik)
+export PATH="$HOME/misc/jdk-17.0.1/bin:$PATH"
 
 # run sway on tty1 login
 if [ "$(tty)" = "/dev/tty1" ]; then

@@ -55,6 +55,7 @@ vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 vim.g.indent_blankline_char_highlight = 'LineNr'
 vim.g.indent_blankline_show_trailing_blankline_indent = false
 
+-- messes up pywal colourscheme
 vim.o.termguicolors = true				-- true colour support
 
 -- spellcheck languages
@@ -86,14 +87,19 @@ vim.api.nvim_set_keymap('n', '<leader>fS', '<cmd>Telescope lsp_workspace_symbols
 
 vim.api.nvim_set_keymap('n', '<leader>fgb', '<cmd>Telescope git_branches<cr>', opts)
 
+-- dap
+-- vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>lua require("dapui").toggle()<cr>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>dt', '<cmd>lua require("dapui").toggle("tray")<cr>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>ds', '<cmd>lua require("dapui").toggle("sidebar")<cr>', opts)
+
 -- automatically show all diagnostics on the current line in a floating window.
-vim.cmd('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
+vim.cmd('autocmd CursorHold * lua vim.diagnostic.open_float()')
 vim.o.updatetime = 300
 
 -- Go to next diagnostic (if there are multiple on the same line, only shows
 -- one at a time in the floating window)
 vim.api.nvim_set_keymap(
-  'n', '<Leader>n', ':lua vim.diagnostic.goto_next()<CR>',
+  'n', '<Leader>n', '<cmd>lua vim.diagnostic.goto_next()<CR>',
   { noremap = true, silent = true }
 )
 -- Go to prev diagnostic (if there are multiple on the same line, only shows
@@ -152,8 +158,8 @@ require "paq" {
 	"windwp/nvim-autopairs";						-- autopairs
 	"nvim-treesitter/nvim-treesitter";				-- treesitter parsing
 	"nvim-treesitter/nvim-treesitter-refactor";		-- treesitter refactoring support
-	"mfussenegger/nvim-dap";						-- debug adapter protocol
-	"rcarriga/nvim-dap-ui";							-- nice ui for dap
+	-- "mfussenegger/nvim-dap";						-- debug adapter protocol
+	-- "rcarriga/nvim-dap-ui";						-- nice ui for dap
 	"neovim/nvim-lspconfig";						-- lsp config
 	"williamboman/nvim-lsp-installer";				-- auto install lsp servers
 	"hrsh7th/nvim-cmp";								-- completions
@@ -164,6 +170,7 @@ require "paq" {
 	"simrat39/rust-tools.nvim";						-- extra features of rust lsp
 	"Saecki/crates.nvim";							-- crates.io help
 	"famiu/feline.nvim";							-- lazy statusline
+	-- "ftilde/vim-ugdb";								-- ugdb integration
 	-- colour schemes
 	-- "novakne/kosmikoa.nvim";
 	"NTBBloodbath/doom-one.nvim";
@@ -173,38 +180,35 @@ require "paq" {
 --   :PaqInstall to install all plugins
 --   :PaqUpdate to update them
 --   :PaqClean to remove unused
+--   :PaqSync to do it all
 
--- colourscheme
--- todo: fix this mess
--- require('kosmikoa')
--- require('nightfox').setup({
---   fox = "duskfox", -- Which fox style should be applied
---   alt_nc = true, -- Non current window bg to alt color see `hl-NormalNC`
---   terminal_colors = true, -- Configure the colors used when opening :terminal
--- })
--- require('nightfox').load()
-
--- config for diagnostics (doesn't know what this is without Paq)
+-- config for diagnostics (doesn't know what this is without calling Paq first)
 vim.diagnostic.config({
   virtual_text = false, -- Turn off inline diagnostics
 })
 
+-- change to 'light'/'dark' to change coloursheme variant
+vim.opt.background = 'dark'
 
+-- setup doom colourscheme
 require('doom-one').setup({
-	cursor_coloring = true,
+	cursor_coloring = false,
     terminal_colors = true,
 	plugins_integrations = {
 		telescope = true
 	},
+	transparent_background = false,
 	pumblend = {
 		enable = false,
 		transparency_amount = 20,
 	},
+	plugins_integration = {
+		nvim_tree = false,
+		whichkey = false,
+	}
 })
 
--- require('doom-one').setup()
-
--- trim whitespace etc
+-- trim: trims trailing whitespace
 local config = {
   disable = {},
   patterns = {
@@ -216,19 +220,20 @@ local config = {
 }
 require('trim').setup(config)
 
--- telescope setup
+-- telescope
+-- todo: some configuration
 require('telescope').setup()
 
 -- which key
 require('which-key').setup()
 
--- comment
+-- comment (automatic comment lines)
 require('Comment').setup()
 
 -- git in buffers
 require('gitsigns').setup()
 
--- todo: replace with nnn.nvim
+-- todo: replace with nnn.nvim or similar
 -- unholy file tree browser
 -- requires stupid vim config
 vim.api.nvim_exec([[
@@ -300,35 +305,11 @@ require('nvim-tree').setup()
 -- autopairs
 require('nvim-autopairs').setup()
 
-local dap = require('dap')
-dap.adapters.lldb = {
-  type = 'executable',
-  command = '/usr/bin/lldb-vscode', -- adjust as needed
-  name = "lldb"
-}
-dap.configurations.rust = {
-  {
-    name = "Launch",
-    type = "lldb",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-    args = {},
-    runInTerminal = false,
-  },
-}
-
--- doesn't work / add opts
-require("dapui").setup()
-
 -- treesitter configuration
 -- install parsers manually via :TSInstall
 -- todo: can probably remove some of this default config mess
 require('nvim-treesitter.configs').setup {
-	ensure_installed = { "rust", "toml", "lua", "svelte", "typescript" },
+	ensure_installed = { "rust", "toml", "lua", "svelte", "typescript", "markdown", "c", "cpp" },
 	highlight = {
 		enable = true,
 	},
@@ -354,22 +335,6 @@ require('nvim-treesitter.configs').setup {
 			enable = true,
 			set_jumps = true, -- whether to set jumps in the jumplist
 			-- todo: configure these bindings properly
-			-- goto_next_start = {
-			-- 	[']m'] = '@function.outer',
-			-- 	[']]'] = '@class.outer',
-			-- },
-			-- goto_next_end = {
-			-- 	[']M'] = '@function.outer',
-			-- 	[']['] = '@class.outer',
-			-- },
-			-- goto_previous_start = {
-			-- 	['[m'] = '@function.outer',
-			-- 	['[['] = '@class.outer',
-			-- },
-			-- goto_previous_end = {
-			-- 	['[M'] = '@function.outer',
-			-- 	['[]'] = '@class.outer',
-			-- },
 		},
 	},
 	refactor = {
@@ -381,6 +346,7 @@ require('nvim-treesitter.configs').setup {
 -- lsp settings
 local nvim_lsp = require 'lspconfig'
 -- this lsp config is wack as hell, barely works
+-- todo: probably because of rust-tools plugin
 local on_attach = function(_, bufnr)
 	--
 	-- -- todo: some local helper for setting bindings to make more tractable
@@ -432,7 +398,8 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- todo: this should use the same opts as lsp installer + rust-tools
 -- enable language servers
 -- 'rust_analyzer' handled by other plugin (for now...)
-local servers = { 'clangd', 'pyright', 'svelte' }
+-- todo: remove / consolidate that thing
+local servers = { 'clangd', 'pyright' }
 
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup {
@@ -450,6 +417,7 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 -- lsp signature (nb should be on_attach?)
+-- todo: what does this do again..
 require('lsp_signature').setup()
 
 -- snippets
@@ -469,7 +437,7 @@ local rust_opts = {
         inlay_hints = {
 			show_parameter_hints = false,
 			parameter_hints_prefix = "",
-			other_hints_prefix = ": ",
+			other_hints_prefix = " ",
         },
     },
     server = {
@@ -522,24 +490,24 @@ cmp.setup {
 		},
 
 		-- ultratab (don't really use)
-		['<Tab>'] = function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-				elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			else
-				fallback()
-			end
-		end,
-		['<S-Tab>'] = function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-				elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end,
+		-- ['<Tab>'] = function(fallback)
+		-- 	if cmp.visible() then
+		-- 		cmp.select_next_item()
+		-- 		elseif luasnip.expand_or_jumpable() then
+		-- 		luasnip.expand_or_jump()
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end,
+		-- ['<S-Tab>'] = function(fallback)
+		-- 	if cmp.visible() then
+		-- 		cmp.select_prev_item()
+		-- 		elseif luasnip.jumpable(-1) then
+		-- 		luasnip.jump(-1)
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end,
 	},
 	sources = {
 		{ name = 'nvim_lsp' },
@@ -550,7 +518,8 @@ cmp.setup {
 	},
 }
 
--- statusline (todo: more custom)
+-- statusline
+-- todo: pretty basic of me
 require('feline').setup {
 	preset = 'noicon'
 }
