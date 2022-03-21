@@ -5,8 +5,8 @@ window:
   padding:
     x: 0
     y: 0
+  opacity: 0.9
 tabspaces: 4
-background_opacity: 0.9
 dynamic_title: true
 font:
   normal:
@@ -25,7 +25,7 @@ font:
     family: Sauce Code Pro Nerd Font Mono
     style: Bold Italic Mono
 
-  size: 12
+  size: 12.5
 
   offset:
     y: 1

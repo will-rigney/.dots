@@ -55,6 +55,9 @@ vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 vim.g.indent_blankline_char_highlight = 'LineNr'
 vim.g.indent_blankline_show_trailing_blankline_indent = false
 
+vim.o.wrap = true
+vim.o.linebreak = true
+
 -- messes up pywal colourscheme
 vim.o.termguicolors = true				-- true colour support
 
@@ -66,9 +69,9 @@ vim.env.BASH_ENV = "$HOME/.bashrc"
 -- nvim tree
 -- todo: like mapops or something
 local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap('n', '<leader>t', '<cmd>NvimTreeToggle<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>r', '<cmd>NvimTreeRefresh<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>n', '<cmd>NvimTreeFindFile<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>tn', '<cmd>NvimTreeFindFile<CR>', opts)
 
 -- toggle spell check
 vim.api.nvim_set_keymap('n', '<leader>sc', '<cmd>set spell!<CR>', opts)
@@ -154,7 +157,7 @@ require "paq" {
 	"folke/which-key.nvim";							-- which key
 	"numToStr/Comment.nvim";						-- comments
 	"lewis6991/gitsigns.nvim";						-- git in buffer
-	"kyazdani42/nvim-tree.lua";						-- replace netrw (sry bram)
+	-- "kyazdani42/nvim-tree.lua";						-- replace netrw (sry bram)
 	"windwp/nvim-autopairs";						-- autopairs
 	"nvim-treesitter/nvim-treesitter";				-- treesitter parsing
 	"nvim-treesitter/nvim-treesitter-refactor";		-- treesitter refactoring support
@@ -203,10 +206,13 @@ require('doom-one').setup({
 		transparency_amount = 20,
 	},
 	plugins_integration = {
-		nvim_tree = false,
 		whichkey = false,
 	}
 })
+
+-- lighter comment colours
+-- Comment
+vim.api.nvim_command('highlight Comment guifg=#727a82')
 
 -- trim: trims trailing whitespace
 local config = {
@@ -233,74 +239,8 @@ require('Comment').setup()
 -- git in buffers
 require('gitsigns').setup()
 
--- todo: replace with nnn.nvim or similar
 -- unholy file tree browser
--- requires stupid vim config
-vim.api.nvim_exec([[
-let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
-let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
-let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
-"let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
-let g:nvim_tree_symlink_arrow = ' >> ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
-let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
-let g:nvim_tree_window_picker_exclude = {
-    \   'filetype': [
-    \     'notify',
-    \     'minimap',
-    \     'packer',
-    \     'qf'
-    \   ],
-    \   'buftype': [
-    \     'terminal'
-    \   ]
-    \ }
-    \ " todo: more types of buffers
-" Dictionary of buffer option names mapped to a list of option values that
-" indicates to the window picker that the buffer's window should not be
-" selectable.
-let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
-let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 1,
-    \ 'files': 1,
-    \ 'folder_arrows': 0,
-    \ }
-"If 0, do not show the icons for one of 'git' 'folder' and 'files'
-"1 by default, notice that if 'files' is 1, it will only display
-"if nvim-web-devicons is installed and on your runtimepath.
-"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
-"but this will not work when you set indent_markers (because of UI conflict)
-
-" default will show icon by default if no icon is provided
-" default shows no icon by default
-let g:nvim_tree_icons = {
-    \ 'default': '',
-    \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   }
-    \ }
-]], false)
-require('nvim-tree').setup()
+-- todo: gone... replace with nnn.nvim or similar
 
 -- autopairs
 require('nvim-autopairs').setup()
@@ -350,44 +290,7 @@ local nvim_lsp = require 'lspconfig'
 local on_attach = function(_, bufnr)
 	--
 	-- -- todo: some local helper for setting bindings to make more tractable
-	-- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-	--
-	-- -- should use these opts outside
-	-- local opts = { noremap = true, silent = true }
-	--
-	-- -- todo: bindings prefixed with 'g' for goto need more consistency
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	--
-	-- -- todo: doesn't work due to default doc map?
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	--
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	--
-	-- -- leader workspace (not used? pointless?)
-	-- -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-	-- -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-	-- -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-	--
-	-- -- why not g
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-	-- -- vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
-	--
-	-- -- nice
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-	--
-	-- -- strange binding?
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-	--
-	-- -- slightly confusing binding, <leader>s should prefix surrounds editing
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
-	--
+	-- this is where we would put clever late initialisation for lsp on attach
 	vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
@@ -399,7 +302,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- enable language servers
 -- 'rust_analyzer' handled by other plugin (for now...)
 -- todo: remove / consolidate that thing
-local servers = { 'clangd', 'pyright' }
+local servers = { 'clangd', 'pyright', 'rust_analyzer' }
 
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup {
@@ -408,7 +311,7 @@ for _, lsp in ipairs(servers) do
 	}
 end
 
--- automatically install lsp servers
+-- tool to install lsp servers
 local lsp_installer = require("nvim-lsp-installer")
 
 lsp_installer.on_server_ready(function(server)
@@ -426,7 +329,7 @@ local luasnip = require('luasnip')
 -- rust tools
 local rust_opts = {
     tools = {
-        autoSetHints = true,
+        autoSetHints = false,
         hover_with_actions = true,
         runnables = {
 			use_telescope = false
@@ -448,7 +351,8 @@ local rust_opts = {
             ["rust-analyzer"] = {
                 -- enable clippy on save
                 checkOnSave = {
-                    command = "clippy"
+                    command = "clippy",
+					allTargets = false
                 },
 				proc_macro = { enable = true }
             }

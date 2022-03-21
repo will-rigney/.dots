@@ -24,6 +24,12 @@ shopt -s expand_aliases
 alias ls='exa -Fl --no-permissions --no-user'
 alias la='exa -Flha'
 
+# use trash instead of plain rm
+alias rm='trash'
+
+# use zoxide instead of cd
+alias cd='z'
+
 # use wal to update wallpaper * terminal colours
 change-wal () {
 	wp=$1;
@@ -43,6 +49,9 @@ alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME';
 
 # rust ugdb
 alias rugdb='ugdb --gdb rust-gdb --nh';
+
+# rust cd zoxide
+eval "$(zoxide init bash)"
 
 # starship prompt
 eval "$(starship init bash)";

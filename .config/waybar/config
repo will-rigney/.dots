@@ -5,20 +5,31 @@
 {
     "layer": "top", 		// top layer, over windows
     "position": "bottom", 	// position (top|bottom|left|right)
-    // "height": 32, 			// height (remove for auto height)
 
     // order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
+    "modules-left": ["sway/workspaces", "sway/mode"],
+	// "modules-center": [],
     "modules-center": ["sway/window"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "battery", "tray", "clock"],
+    "modules-right": [
+			/* "sway/window", */
+			/* "custom/media", */
+			"idle_inhibitor",
+			"pulseaudio",
+			"network",
+			"cpu",
+			"memory",
+			"temperature",
+			"backlight",
+			"keyboard-state",
+			"battery",
+			"tray",
+			"clock"
+		],
 
     // modules configuration
     "sway/workspaces": {
         "disable-scroll": true,
 	},
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -36,30 +47,30 @@
     },
     "cpu": {
         "format": "cpu: {usage}%",
-        "tooltip": true
+        "tooltip": true,
     },
     "memory": {
         "format": "ram: {}%"
     },
 	"disk": {
-		"format": "space: {}"
+		"format": "free: {}"
 	},
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
-        "format": "temp: {temperatureC}°C",
+        "format": "{temperatureC}°C",
     },
     "network": {
-        "format-wifi": "wifi: {signalStrength}%",
-        "format-ethernet": "eth - {ifname}: {ipaddr}/{cidr}",
-        "format-linked": "no ip - {ifname}",
+        "format-wifi": "{essid}({ifname}): {signalStrength}%",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+        "format-linked": "no ip - {essid}({ifname})",
         "format-disconnected": "as god intended",
-        "format-alt": "{essid}({ifname}): {ipaddr}/{cidr}"
+        // "format-alt": "{essid}({ifname}): {ipaddr}/{cidr}"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "vol: {volume}% {format_source}",
+        "format": "vol: {volume}%",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
@@ -86,17 +97,19 @@
 			"critical": 5
 		},
 	},
+	// todo: does this support musikcube?
+	// uses dbus / playerctl for player info
     "custom/media": {
-		"format": "{icon} {}",
+		"format": "{}",
 		"return-type": "json",
 		"max-length": 40,
 		"format-icons": {
 		    "spotify": "",
-		    "default": "🎜"
+		    "default": ""
 		},
 		"escape": true,
-		"exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-		// "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+		/* "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder */
+		"exec": "python3 $HOME/.config/waybar/mediaplayer.py --player spotifyd 2> /dev/null"
     }
 }
 

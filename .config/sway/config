@@ -32,6 +32,9 @@ for_window [class="Steam"] floating enable
 
 ### startup exec
 
+## dbus user bus (forget dbus-run-session)
+exec dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
+
 ## clipman (used to share clipboard after window closed)
 exec wl-paste -t text --watch clipman store --no-persist
 
@@ -40,7 +43,7 @@ exec --no-startup-id pipewire & pipewire-pulse &
 
 ## hacker cursor
 # need to set for gtk / qt too
-seat seat0 xcursor_theme Breeze_Hacked 24
+# seat seat0 xcursor_theme Breeze_Hacked 24
 
 ## sworkstyle
 exec sworkstyle &> /tmp/sworkstyle.log
@@ -52,7 +55,10 @@ exec dunst
 exec udiskie
 
 ## update gamma settings etc.
-exec wl-gammactl -c 1.085 -b 1.000 -g 0.800
+# todo: make this a separate config file optional for different machines
+# exec wl-gammactl -c 1.085 -b 1.000 -g 0.800
+
+exec spotifyd --no-daemon
 
 ### output configuration
 
@@ -64,13 +70,13 @@ output DP-1 {
 	scale 1
 	pos 0 0
 	res 2560x1440@143.856Hz
-	adaptive_sync on
+	adaptive_sync off
 	subpixel none
 }
 
 # todo: scale with big res
 output HDMI-A-1 {
-	scale 1.5
+	# scale 1.5
 }
 
 ### idle configuration
@@ -92,6 +98,7 @@ input type:pointer {
 
 # remap caps to escape
 input type:keyboard {
+    # xkb_options caps:swapescape
     xkb_options caps:escape
 }
 
@@ -125,14 +132,17 @@ client.background		$background
 
 ### key bindings
 
+# test kitty
+bindsym $mod+t exec kitty
+
 # start a terminal
-bindsym $mod+Return exec $term
+# bindsym $mod+Return exec $term>~/term.log
 
 # kill focused window
 bindsym $mod+q kill
 
 # start your launcher
-bindsym $mod+space exec $menu
+bindsym $mod+space $menu
 
 # swap workspaces back & forth
 bindsym $mod+tab workspace back_and_forth
@@ -145,7 +155,12 @@ floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 
 # show logout menu
-bindsym $mod+Shift+e exec wlogout &
+# bindsym $mod+Shift+e exec wlogout &
+# todo: permissions
+bindsym $mod+Shift+e exec wlogout -p xdg &
+
+# take a screenshot
+bindsym $mod+Shift+s exec grimshot save area
 
 ## moving around:
 
