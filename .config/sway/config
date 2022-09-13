@@ -24,10 +24,9 @@ set $term alacritty
 
 # application launcher
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 5
-
 set $menu exec $term --class=launcher -e $HOME/dev/sway-launcher-desktop/sway-launcher-desktop.sh
 
-# steam always floating
+# steam always start floating
 for_window [class="Steam"] floating enable
 
 ### startup exec
@@ -52,7 +51,8 @@ exec dunst
 exec udiskie
 
 ## update gamma settings etc.
-exec wl-gammactl -c 1.085 -b 1.000 -g 0.800
+# exec wl-gammactl -c 1.085 -b 1.000 -g 0.800
+# exec wl-gammactl -c 1.000 -b 1.000 -g 1.000
 
 ### output configuration
 
@@ -85,10 +85,17 @@ exec swayidle -w \
 ### input configuration
 
 ## disable mouse acceleration
+# todo: clearly doesn't work
 # todo: middle button
 input type:pointer {
 	pointer_accel -1
+	accel_profile adaptive
 }
+
+# touchpoint
+# input "2:1:PS\/2_Generic_Mouse" {
+	# pointer_accel -1
+# }
 
 # remap caps to escape
 input type:keyboard {
