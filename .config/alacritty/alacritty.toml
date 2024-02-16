@@ -1,5 +1,4 @@
-dynamic_title = true
-tabspaces = 4
+# tabspaces = 4
 
 [font]
 size = 16
@@ -25,9 +24,12 @@ y = 1
 
 [window]
 opacity = 1.0
+decorations_theme_variant = "Dark"
+startup_mode = "Maximized"
+dynamic_title = true
 
-[window.env]
-TERM = "xterm-256color"
+# [window.env]
+# TERM = "xterm-256color"
 
 [window.padding]
 x = 0
