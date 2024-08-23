@@ -6,6 +6,9 @@
 -- vim.opt_global: behaves like :setglobal
 -- vim.opt_local: behaves like :setlocal
 
+-- first redefine vim as local
+local vim = vim
+
 --- general editor settings ---
 
 -- line numbers
@@ -13,7 +16,7 @@ vim.opt.number = true								-- show line numbers
 vim.opt.relativenumber = true						-- relative line numbers 
 
 -- clipboard
-vim.opt.clipboard = unnamedplus						-- yank to system clipboard
+vim.opt.clipboard = "unnamedplus"						-- yank to system clipboard
 
 -- search
 vim.opt.ignorecase = true							-- ignore case in search
@@ -44,14 +47,18 @@ vim.opt.completeopt = {'menu','menuone','noselect'}	-- show menu for one match, 
 vim.opt.title = true								-- enable window decoration title
 vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes'							-- always display sign column
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
 -- wrap
+vim.opt.linebreak = true 								-- break on word boundary, see breakat string
 vim.opt.wrap = false 								-- disable wrapping
 
 -- saving
 vim.opt.updatetime = 250							-- decrease update time for swap files
 -- todo: potentially no swap?
 vim.opt.hidden = true								-- don't save when switching buffers
+-- shared data vim.opt.shada = { "'10", "<0", "s10", "h" }
 
 -- colours
 vim.cmd "colorscheme habamax"						-- set colour scheme
@@ -73,12 +80,14 @@ vim.g.netrw_preview = 1  							-- vertical preview
 --- env
 vim.env.BASH_ENV = "$HOME/.bashrc"					-- use env in vim env (needed?)
 
--- filetype detection
+-- filetype
 vim.cmd "filetype plugin indent on"					-- enables plugin & indent files
 
 --- modules
 require 'statusline'
 require 'keybinds'
+require 'lazy'
+--require 'plugins'
 
 -- automatically show all diagnostics on the current line in a floating window.
 -- todo: figure out lsp support

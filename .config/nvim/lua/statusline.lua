@@ -1,6 +1,5 @@
 local function status_line()
-  local mode = "%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}"
-  local file_name = "%-.16t"
+  local file_name = "%-.16t" -- todo: how does this formatting work
   local buf_nr = "[%n]"
   local modified = " %-m"
   local file_type = " %y"
@@ -9,8 +8,7 @@ local function status_line()
   local pct_thru_file = "%5p%%"
 
   return string.format(
-    "%s%s%s%s%s%s%s%s",
-    mode,
+    "%s%s%s%s%s%s%s",
     file_name,
     buf_nr,
     modified,
@@ -24,5 +22,6 @@ end
 -- todo: 
 --  - show number of buffers?
 --  - filename truncated too soon
+--  - show mode in pretty colours or don't 
 
 vim.opt.statusline = status_line()
