@@ -14,12 +14,16 @@ vim.cmd "colorscheme habamax"						-- set colour scheme
 -- filetype
 vim.cmd "filetype plugin indent on"					-- enables plugin & indent files
 
+-- map leader
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 --- modules
 require 'options'
+require 'lazyinit' -- todo: maybe fold into init file
 require 'statusline'
 require 'keybinds'
 require 'netrw'
-require 'lazyinit'
 
 --- todos
 -- - markdown, txt, data files should have better wrapping behaviour

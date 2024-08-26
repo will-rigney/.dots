@@ -14,7 +14,7 @@ vim.opt.relativenumber = true						-- relative line numbers
 -- can't use unnamedplus due to odd bug with gnome & netrw
 -- vim.opt.clipboard = "unnamed"						-- yank to system clipboard
 
--- search
+-- searchopti
 vim.opt.ignorecase = true							-- ignore case in search
 vim.opt.smartcase = true							-- unless /C or captital in search
 
@@ -38,7 +38,7 @@ vim.opt.sidescrolloff = 8							-- scroll 8 columns from right
 vim.opt.wildmode = {'list', 'longest'}				-- list matches until longest common string
 vim.opt.wildoptions = {"pum"}						--
 vim.opt.inccommand = 'nosplit'						-- incremental completion
-vim.opt.completeopt = {'menu','menuone','noselect'}	-- show menu for one match, don't insert until selected
+vim.opt.completeopt = {'menu','menuone','noselect', 'noinsert', 'popup' }	-- show menu for one match, don't insert until selected
 
 -- window
 vim.opt.title = true								-- enable window decoration title
