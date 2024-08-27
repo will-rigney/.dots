@@ -1,3 +1,7 @@
+-- lsp-config
+-- community sourced configs for lsp integrations
+-- https://github.com/neovim/nvim-lspconfig
+
 return
 {
 	"neovim/nvim-lspconfig",
@@ -7,18 +11,17 @@ return
 	},
 	config = function()
 		local lspconfig = require "lspconfig"
-		-- setup lsps
+
+		-- setup language servers
 		lspconfig.bashls.setup {}
 		lspconfig.rust_analyzer.setup {}
 		lspconfig.lua_ls.setup {}
 		lspconfig.clangd.setup {}
 		lspconfig.pyright.setup {}
 
-		-- lspconfig.clangd = {
-		-- 	init_options = { clangdFileStatus = true },
-		-- 	filetypes = { "c" }, -- todo: make sure filetype for headers accepted
-		-- 		-- todo: clangd c++?
-		-- }
-		-- lspconfig.clangd.setup()
+		-- todo: make sure filetype for headers accepted
+
+		-- reload for current file
+		vim.api.nvim_exec_autocmds("FileType", {})
 	end
 }

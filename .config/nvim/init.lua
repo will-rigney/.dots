@@ -22,7 +22,7 @@ vim.g.maplocalleader = ' '
 require 'options'
 require 'lazyinit' -- todo: maybe fold into init file
 require 'statusline'
-require 'keybinds'
+require 'keymap'
 require 'netrw'
 
 --- todos

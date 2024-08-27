@@ -7,16 +7,40 @@ return
 		"nvim-neotest/nvim-nio"
 	},
 	config = function()
-		-- local lspconfig = require("lspconfig"
+		-- todo: is there more setup to do here?
+		-- todo: maybe separate dap ui
+		local dapui = require "dapui"
+		dapui.setup()
+
 		local dap = require "dap"
-		-- local ui = require "dapui"
-
-		require("dapui").setup()
-
-		-- uh oh, dap only keymaps
-		vim.keymap.set("n", "<space>b", dap.toggle_breakpoint)
-
-		-- todo: change this one
-		vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
+		dap.configurations.cpp = {
+			{
+				name = "Launch file",
+				type = "cppdbg",
+				request = "launch",
+				program = function()
+					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+				cwd = '${workspaceFolder}',
+				stopAtEntry = true,
+			},
+			{
+				name = 'Attach to gdbserver :1234',
+				type = 'cppdbg',
+				request = 'launch',
+				MIMode = 'gdb',
+				miDebuggerServerAddress = 'localhost:1234',
+				miDebuggerPath = '/usr/bin/gdb',
+				cwd = '${workspaceFolder}',
+				program = function()
+					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+			},
+		}
+		-- require("dapui").setup()
+		--
+		-- use same configuration for cpp and rust
+		dap.configurations.c = dap.configurations.cpp
+		dap.configurations.rust = dap.configurations.cpp
 	end
 }

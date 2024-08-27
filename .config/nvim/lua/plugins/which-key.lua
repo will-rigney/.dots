@@ -1,3 +1,7 @@
+-- which-key
+-- hints for keymap
+-- https://github.com/folke/which-key.nvim
+
 return
 {
 	"folke/which-key.nvim",
@@ -7,17 +11,15 @@ return
 			separator = ": ",
 			mappings = false
 		}
-		-- your configuration comes here
-		-- or leave it empty to use the default settings
-		-- refer to the configuration section below
 	},
+	-- todo: move this bind to keymap file too
 	keys = {
 		{
 			"<leader>?",
 			function()
-				require("which-key").show({ global = true })
+				require("which-key").show { global = true }
 			end,
-			desc = "Buffer Local Keymaps (which-key)",
+			desc = "show buffer local keymaps",
 		},
 	},
 }
