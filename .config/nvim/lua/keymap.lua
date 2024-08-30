@@ -17,6 +17,7 @@ wk.add({
 	{ "<leader>r", group = "+reload" },
 	{ "<leader>t", group = "+tab" },
 	{ "<leader>", group = "+leader" },
+	{ "<leader>g", group = "+git" },
 	{ "[", group = "+jump previous" },
 	{ "]", group = "+jump next" },
 	{ "g", group = "+mystic g" },
@@ -74,12 +75,10 @@ set('n', '<leader>n', '<cmd>Explore<cr>', { desc = "open [n]etrw" }) -- open net
 local builtin = require('telescope.builtin')
 -- todo: this should show hidden files, not show .git and probably follow .gitignore
 set('n', '<leader>ff', builtin.find_files, { desc = "[f]ind [f]file" })
-set('n', '<leader>fg', builtin.live_grep, { desc = "[f]ind [g]rep" }) -- todo: more mnemonic
+set('n', '<leader>fg', builtin.live_grep, { desc = "[f]ind [g]rep" })
 set('n', '<leader>fb', builtin.buffers, { desc = "[f]ind [b]uffer" })
 set('n', '<leader>fh', builtin.help_tags, { desc = "[f]ind [h]elp" })
-
--- set("n", "<leader>ft", builtin.git_files, { desc = "[f]ind gi[t] files"}) -- todo: cringe, don't think has a point
--- set("n", "<leader>gw", builtin.grep_string, { desc = "[g]wep st[w]ing"}) -- todo: this is probably useful (grep string under cursor) but needs better key
+set("n", "<leader>fs", builtin.grep_string, { desc = "[f]ind [s]tring"})
 
 -- think about this key
 set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "fuzzy search current buffer" })
@@ -111,10 +110,28 @@ set("t", "<esc><esc>", "<c-\\><c-n>") -- escape from terminal
 local dap = require "dap"
 local dapui = require "dapui"
 -- todo: dapui keymap controls (+ sane layout)
-vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "toggle [d]ebug [b]reakpoint" })
-vim.keymap.set("n", "<leader>dn", "<cmd>DapNew<cr>", { desc = "[d]ebug [n]ew session" })
-vim.keymap.set({ "n", "v" }, "<leader>de", dapui.eval, { desc = "[d]ebug [e]valuate expression"})
+set("n", "<leader>db", dap.toggle_breakpoint, { desc = "toggle [d]ebug [b]reakpoint" })
+set("n", "<leader>dn", "<cmd>DapNew<cr>", { desc = "[d]ebug [n]ew session" })
+set({ "n", "v" }, "<leader>de", dapui.eval, { desc = "[d]ebug [e]valuate expression"})
 -- note that apparently nvim-dap is compatible with .vscode/launch.json config files
 
--- todo: git (<leader>g), especially stage hunk, stage line, view diff maybe, gitsigns
+-- git
+local gitsigns = require "gitsigns"
+-- add groups
+wk.add({
+	{ "<leader>gs", group = "+stage" },
+	{ "<leader>gr", group = "+reset" },
+})
 
+-- todo: check do these work on just current buffer?
+set('n', '<leader>gd', gitsigns.diffthis, { desc = "[g]it [d]iff"})
+set('n', '<leader>gsh', gitsigns.stage_hunk, { desc = "[g]it [s]tage [h]unk"})
+set('v', '<leader>gsh', function() gitsigns.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, { desc = "[g]it [s]tage [h]unk"})
+set('n', '<leader>gsb', gitsigns.stage_buffer, { desc =  "[g]it [s]tage [b]uffer" }) -- todo: stage file or something? git metaphor not vim metaphor
+set('n', '<leader>grh', gitsigns.reset_hunk, { desc = "[g]it [r]eset [h]unk"})
+set('v', '<leader>grh', function() gitsigns.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+set('n', '<leader>grb', gitsigns.reset_buffer, { desc = "[g]it [r]eset [b]uffer"})
+set('n', '<leader>gb', gitsigns.toggle_current_line_blame, { desc = "[g]it [b]lame toggle"}) -- this is cool
+-- text object (untested)
+set({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+-- todo: stage line would be nice (like in tig)
