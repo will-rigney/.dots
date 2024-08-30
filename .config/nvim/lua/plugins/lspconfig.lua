@@ -19,7 +19,7 @@ return
 		lspconfig.clangd.setup {}
 		lspconfig.pyright.setup {}
 
-		-- todo: make sure filetype for headers accepted
+		-- todo: make sure filetype for c/cpp headers accepted
 
 		-- reload for current file
 		vim.api.nvim_exec_autocmds("FileType", {})

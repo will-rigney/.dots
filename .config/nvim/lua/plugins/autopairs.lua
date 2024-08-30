@@ -4,7 +4,7 @@
 
 return {
 	'windwp/nvim-autopairs',
-	event = 'InsertEnter',
+	event = 'VeryLazy',
 	dependencies = { 'hrsh7th/nvim-cmp' },
 	config = function()
 		require('nvim-autopairs').setup {}

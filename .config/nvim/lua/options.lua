@@ -44,9 +44,11 @@ vim.opt.completeopt = {'menu','menuone','noselect', 'noinsert', 'popup' }	-- sho
 vim.opt.title = true								-- enable window decoration title
 vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes'							-- always display sign column
-vim.opt.colorcolumn = '80'							-- superior 80 column marker
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+-- todo: temporary trying without this but its pretty essential normally
+-- vim.opt.colorcolumn = '80'							-- superior 80 column marker
 
 -- wrap
 vim.opt.linebreak = true 								-- break on word boundary, see breakat string
@@ -63,3 +65,5 @@ vim.opt.hidden = true								-- don't save when switching buffers
 -- motion behaviour
 vim.opt.iskeyword:remove '_' 						-- word motion doesn't skip _
 vim.opt.termguicolors = true						-- true colour support (who needs this)
+
+-- 

@@ -24,9 +24,3 @@ require 'lazyinit' -- todo: maybe fold into init file
 require 'statusline'
 require 'keymap'
 require 'netrw'
-
---- todos
--- - markdown, txt, data files should have better wrapping behaviour
---   - filetype plugin
--- - have bindings for vimgrep
--- - delete trailing whitespace on save / format on save

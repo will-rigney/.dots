@@ -8,6 +8,7 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lsp-document-symbol"
 		},
 		config = function()
 			-- require "custom.snippets"
@@ -23,18 +24,16 @@ return {
 
 			cmp.setup {
 				sources = {
+					-- don't understand why text is included sadly
 					{ name = "nvim_lsp" }, -- lsp source
 					{ name = "path" },
 					{ name = "crates" },
 				},
+				-- todo: move these mappings to regular keymap file for consistency
 				mapping = {
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
-							-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-							-- they way you will only jump inside the snippet region
-							-- elseif has_words_before() then
-							--   cmp.complete()
 						else
 							fallback()
 						end
@@ -45,37 +44,34 @@ return {
 						else
 							fallback()
 						end
-					end, { "i", "s" })
-					-- not sure about this mapping? I like control space normally but happy to try
-					-- ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-					-- ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-					-- default is tab
-					-- should probably be enter if the window is open
-					-- with recursive map
-					-- ["<C-y>"] = cmp.mapping( -- <C-y> to insert?
-					-- 	cmp.mapping.confirm {
-					-- 		behavior = cmp.ConfirmBehavior.Insert,
-					-- 		select = true,
-					-- 	},
-					-- 	{ "i", "c" }
-					-- ),
-					-- add nice enter here
-
+					end, { "i", "s" }),
+					["<enter>"] = cmp.mapping(
+						cmp.mapping.confirm {
+							behavior = cmp.ConfirmBehavior.Insert,
+							select = true,
+						},
+						{ "i" } -- only insert mode, not command
+					),
 				},
 
 				-- Enable luasnip to handle snippet expansion for nvim-cmp
-				-- i don't use snippets
+				-- i don't use snippets, maybe I should though
+				-- would be handy to insert e.g. function arguments
 				-- snippet = {
 				-- 	expand = function(args)
 				-- 		vim.snippet.expand(args.body)
 				-- 	end,
 				-- },
+				-- might actually be nice for things like function parameters
+				-- see how we go
 			}
 
-			-- complete for search from buffer text
+			-- cmp for searching
+			-- todo: probably doesn't work with telescope fuzzy finding
 			cmp.setup.cmdline('/', {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
+					{ name = 'nvim_lsp_document_symbol' },
 					{ name = 'buffer' }
 				}
 			})
@@ -83,18 +79,10 @@ return {
 			cmp.setup.cmdline(':', {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources {
-					{ name = 'path' },
-					{ name = 'cmdline' }
+					{ name = 'cmdline' },
+					{ name = 'path' }
 				}
 			})
-
-			-- Setup up vim-dadbod
-			-- cmp.setup.filetype({ "sql" }, {
-			-- 	sources = {
-			-- 		{ name = "vim-dadbod-completion" },
-			-- 		{ name = "buffer" },
-			-- 	},
-			-- })
 		end,
 	},
 }
