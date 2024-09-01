@@ -7,7 +7,7 @@ return
 	"neovim/nvim-lspconfig",
 	event = "VeryLazy",
 	dependencies = {
-		{ "j-hui/fidget.nvim", opts = {} },
+		{ "j-hui/fidget.nvim" },
 	},
 	config = function()
 		local lspconfig = require "lspconfig"
@@ -16,10 +16,14 @@ return
 		lspconfig.bashls.setup {}
 		lspconfig.rust_analyzer.setup {}
 		lspconfig.lua_ls.setup {}
-		lspconfig.clangd.setup {}
-		lspconfig.pyright.setup {}
 
-		-- todo: make sure filetype for c/cpp headers accepted
+		-- not sure we need this with clangd extensions
+		lspconfig.clangd.setup {}
+
+		lspconfig.pyright.setup {}
+		-- lspconfig.jedi_language_server.setup {}
+
+		-- todo: .h currently recognised as cpp headers not c
 
 		-- reload for current file
 		vim.api.nvim_exec_autocmds("FileType", {})

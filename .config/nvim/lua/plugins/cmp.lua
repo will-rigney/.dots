@@ -1,7 +1,7 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		lazy = false,
+		lazy = false, -- increases load time but doesn't need reloading for current buffer
 		priority = 100,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",

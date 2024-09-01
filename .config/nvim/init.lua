@@ -9,7 +9,8 @@ vim.env.BASH_ENV = "$HOME/.bashrc"					-- use env in vim env (needed?)
 -- i don't think i even use .bashrc for env
 
 -- colours
-vim.cmd "colorscheme habamax"						-- set colour scheme
+-- currently rocking with default
+-- vim.cmd "colorscheme habamax"						-- set colour scheme
 
 -- filetype
 vim.cmd "filetype plugin indent on"					-- enables plugin & indent files

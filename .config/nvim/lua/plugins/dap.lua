@@ -12,48 +12,38 @@ return
 		"mfussenegger/nvim-dap",
 		event = "VeryLazy",
 		config = function()
-			-- todo: is there more setup to do here?
-			-- todo: maybe separate dap ui
-
 			local dap = require "dap"
-			-- local dapui = require "dapui"
+			-- adapters
 			-- lldb-dap
 			dap.adapters.lldb = {
 				type = 'executable',
 				command = '/usr/bin/lldb-dap',
 				name = 'lldb'
 			}
+			-- (that's all for now)
 
-			-- todo: have option to rebuild too
+			-- todo: if there's a per project vscode launch configuration don't bother with the default ones
+
+			-- todo: make project?
 			dap.configurations.c = {
 				{
-					name = 'Launch',
+					name = 'default debug (lldb)',
 					type = 'lldb',
 					request = 'launch',
 					program = function()
+						-- theres a variable to open file picker
 						-- todo: doesn't autocomplete, should probably rebuild for you or something
 						return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
 					end,
-					cwd = '${workspaceFolder}', -- todo: does this ${workspaceFolder} come from lsp?
+					cwd = '${workspaceFolder}', -- current nvim working directory
 					stopOnEntry = false, -- todo: stop on entry doesn't work? at least not for c
 				},
-				-- 	maybe attach to running lldb?
-				-- 		name = 'Attach to gdbserver :1234',
-				-- 		type = 'cppdbg',
-				-- 		request = 'launch',
-				-- 		MIMode = 'gdb',
-				-- 		miDebuggerServerAddress = 'localhost:1234',
-				-- 		miDebuggerPath = '/usr/bin/gdb',
-				-- 		cwd = '${workspaceFolder}',
-				-- 		program = function()
-				-- 			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-				-- 		end,
-				-- 	},
 			}
 
 			-- use same configuration for c, cpp and rust
-			-- todo: fancier rust configuration
 			dap.configurations.cpp = dap.configurations.c
+
+			-- todo: much fancier rust configuration
 			dap.configurations.rust = dap.configurations.c
 		end
 	},
@@ -69,65 +59,64 @@ return
 			local dap = require "dap"
 			local dapui = require "dapui"
 			dapui.setup(
-			-- todo: why doesn't this just silently override missing defaults
+			---@diagnostic disable-next-line: missing-fields
 				{
 					controls = {
 						element = "repl",
 						enabled = true,
-						-- todo: maybe throw in the keybinds into icons
+						-- todo: throw in the keybinds into icons (when they exist)
 						icons = {
-							disconnect = "disconnect",
-							pause = "pause",
-							play = "play",
-							run_last = "rerun",
-							step_back = "back",
-							step_into = "into",
-							step_out = "out",
-							step_over = "over",
-							terminate = "stop" -- stop?
+							disconnect = "disconnect<F8>", -- don't need this one really
+							pause = "pause", -- pause??
+							play = "play<F1>",
+							run_last = "restart<F6>",
+							step_back = "back<F5>",
+							step_into = "into<F2>",
+							step_out = "out<F4>",
+							step_over = "over<F3>",
+							terminate = "stop<F7>"
 						}
 					},
-					element_mappings = {}, -- what does this do?
 					floating = {
 						border = "single",
 						mappings = {
-							close = { "q", "<Esc>" }
+							close = { "q", "<Esc>" } -- this is what I want for every floating window
 						}
 					},
-					force_buffers = true,
-					icons = {
-						collapsed = "",
-						current_frame = "",
-						expanded = ""
-					},
-					-- layouts = { {
-					--     elements = { {
-					--         id = "scopes",
-					--         size = 0.25
-					--       }, {
-					--         id = "breakpoints",
-					--         size = 0.25
-					--       }, {
-					--         id = "stacks",
-					--         size = 0.25
-					--       }, {
-					--         id = "watches",
-					--         size = 0.25
-					--       } },
-					--     position = "left",
-					--     size = 40
-					--   }, {
-					--     elements = { {
-					--         id = "repl",
-					--         size = 0.5
-					--       }, {
-					--         id = "console",
-					--         size = 0.5
-					--       } },
-					--     position = "bottom",
-					--     size = 10
-					--   } },
-					-- whats going on here anyway
+					layouts = { {
+						elements = { {
+							id = "scopes",
+							size = 0.50,
+						}, {
+							id = "breakpoints",
+							size = 0.25
+						}, {
+							id = "stacks",
+							size = 0.25
+						}
+							-- maybe later
+							-- , {
+							--      id = "watches",
+							--      size = 0.25
+							--    }
+						},
+						position = "left",
+						size = 60
+					}, {
+						elements = { {
+							id = "repl",
+							size = 1.0 --0.6
+						}
+							-- also maybe later
+							-- 			, {
+							-- 	id = "console",
+							-- 	size = 0.4
+							-- }
+						},
+						position = "bottom",
+						size = 10
+					} },
+					-- whats going on here with these mappings?
 					mappings = {
 						edit = "e",
 						expand = { "<CR>", "<2-LeftMouse>" },
@@ -143,24 +132,31 @@ return
 				}
 			)
 
+			-- wtf why not open anymore
 
-			-- listener to open dap ui
-			-- n.b. shouldn't trigger if initialisation failed
-			-- todo: configure dapui to have sane layout
+			-- open on new session
 			dap.listeners.after.event_initialized["dapui_config"] = function()
 				dapui.open()
 			end
-			-- example config gives on attach and on launch for open
 
-			-- unused listeners
-			-- todo: evaluate & test these out
-			-- dap.listeners.before.event_terminated["dapui_config"] = function()
-			-- 	dapui.close()
-			-- end
+			-- close on error
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close()
+			end
 
+			-- close on exit
 			dap.listeners.before.event_exited["dapui_config"] = function()
 				dapui.close()
 			end
+
+			-- dap.listeners.before.disconnect["dapui_config"] = function()
+			-- 	dapui.close()
+			-- end
+
+			-- not sure both are needed here
+			-- dap.listeners.after.event_stopped["dapui_config"] = function()
+			-- 	dapui.close()
+			-- end
 		end
 	}
 }

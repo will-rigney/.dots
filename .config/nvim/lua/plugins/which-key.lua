@@ -7,19 +7,43 @@ return
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	opts = {
+		-- preset = "modern", -- classic, modern or helix (modern on the right)
+		preset = "classic",
+		filter = function(mapping)
+			-- exclude mappings without a description
+			return mapping.desc and mapping.desc ~= ""
+		end,
 		icons = {
 			separator = ": ",
-			mappings = false
+			mappings = false,
+			breadcrumb = ">", -- symbol used in the command line area that shows your active key combo
+			group = "+", -- symbol prepended to a group
+			ellipsis = "...",
+			-- use the highlights from `WhichKeyIcon`
+			colors = false,
+			-- used by key format
+			keys = {
+				C = "<ctrl> ",
+				S = "<shift> ",
+				CR = "<cr> ",
+				Esc = "<esc> ",
+				NL = "󰌑 ",
+				BS = "<bs> ",
+				Space = "<space> ",
+				Tab = "<tab> ",
+				F1 = "<F1>",
+				F2 = "<F2>",
+				F3 = "<F3>",
+				F4 = "<F3>",
+				F5 = "<F5>",
+				F6 = "<F6>",
+				F7 = "<F7>",
+				F8 = "<F8>",
+				F9 = "<F9>",
+				F10 = "<F10>",
+				F11 = "<F11>",
+				F12 = "<F12>",
+			},
 		}
-	},
-	-- todo: move this bind to keymap file too
-	keys = {
-		{
-			"<leader>?",
-			function()
-				require("which-key").show { global = true }
-			end,
-			desc = "show buffer local keymaps",
-		},
 	},
 }
