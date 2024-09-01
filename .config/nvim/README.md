@@ -11,8 +11,10 @@ todo: add information on how to install all of these things
 
 - Lua Language Server
 - Rust Analyzer
+  - lldb-dap for debugging
 - Bash Language Server
 - clangd
+  - lldb-dap for debugging
 - todo: think about mason to make life easier
 
 ### telescope
@@ -24,8 +26,8 @@ fd
 
 ## todo
 
-- [*] figure out completion properly - mostly done with cmp plugin
-- [*] autopairs
+- [x] figure out completion properly - mostly done with cmp plugin
+- [x] autopairs
 - [ ] filetypes: e.g. correct tabstop shift size, 
 - [ ] editor_config support
 - [ ] better keymap for selecting completion from popup, scrolling hover
@@ -39,8 +41,8 @@ fd
 - [ ] git integration + bindings
 - [ ] more debug configs, rebuild current project
 
-- [*] have bindings for vimgrep (n.b. this is done using telescope), 
-- [*] change zellij keybinds to not have resize or pane options
+- [x] have bindings for vimgrep (n.b. this is done using telescope), 
+- [x] change zellij keybinds to not have resize or pane options
   - ctrl-t for tabs still not optimal
 
 ### stretch
