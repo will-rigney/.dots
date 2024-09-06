@@ -5,25 +5,37 @@
 return
 {
 	"neovim/nvim-lspconfig",
-	event = "VeryLazy",
 	dependencies = {
+		-- needed for fancy progress message in bottom left corner
 		{ "j-hui/fidget.nvim" },
 	},
 	config = function()
-		local lspconfig = require "lspconfig"
+		local lsp = require "lspconfig"
 
 		-- setup language servers
-		lspconfig.bashls.setup {}
-		lspconfig.rust_analyzer.setup {}
-		lspconfig.lua_ls.setup {}
+		lsp.lua_ls.setup {}
+		lsp.bashls.setup {}
+		lsp.pyright.setup {}
+		lsp.gopls.setup {
+			enhanced_hover = true
+		}
+		lsp.clangd.setup {
+			filetypes = { "c", "cpp", "cuda", "proto" }
+		} -- todo: not sure we need this with clangd extensions plugin
+		lsp.sourcekit.setup {
+			filetypes = { "swift", "objective-c", "objective-cpp" },
+		}
+		lsp.rust_analyzer.setup {
+			settings = {
+				["rust-analyzer"] = {
+					check = {
+						command = "clippy",
+					},
+				}
+			}
+		}
 
-		-- not sure we need this with clangd extensions
-		lspconfig.clangd.setup {}
-
-		lspconfig.pyright.setup {}
-		-- lspconfig.jedi_language_server.setup {}
-
-		-- todo: .h currently recognised as cpp headers not c
+		-- todo: .h currently recognised as cpp headers not c (might be fixed with compile_commands.json)
 
 		-- reload for current file
 		vim.api.nvim_exec_autocmds("FileType", {})
