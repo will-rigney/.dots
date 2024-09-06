@@ -154,8 +154,8 @@ set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = "open [L]azy" })
 
 -- terminal
 set({ "n" }, '<leader>T', ':terminal<cr>', { desc = "open [T]erminal" }) -- open terminal
-set({ "n" }, '<leader>G', ':terminal tig<cr>', { desc = "open ti[G]" }) -- open terminal
-set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "escape terminal mode" })      -- escape from terminal
+set({ "n" }, '<leader>G', ':terminal tig<cr>', { desc = "open ti[G]" })  -- open terminal
+set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "escape terminal mode" }) -- escape from terminal
 
 
 -- debug

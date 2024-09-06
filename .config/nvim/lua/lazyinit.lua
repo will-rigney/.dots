@@ -1,7 +1,5 @@
--- using lazy.nvim for plugin package management as it's the most ubiquitous
+-- using lazy.nvim for plugin package management
 -- pls minimise number of packages to bare minimum
---
--- which key about to go soon
 
 -- bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
