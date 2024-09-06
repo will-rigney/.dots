@@ -1,33 +1,28 @@
+-- nvim-cmp
+-- unified completions
+-- https://github.com/hrsh7th/nvim-cmp
+
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		lazy = false, -- increases load time but doesn't need reloading for current buffer
+		lazy = false, -- wrong -- increases load time but doesn't need reloading for current buffer
 		priority = 100,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-nvim-lsp-document-symbol"
+			"hrsh7th/cmp-nvim-lsp-document-symbol",
+			"rcarriga/cmp-dap" -- is this dependency? what about crates
 		},
+		-- todo: only complete after at least one letter typed
 		config = function()
-			-- require "custom.snippets"
-
-			--vim.opt.completeopt = { "menu", "menuone", "noselect" }
-			-- todo: what is shortmess?
-			--  don't give |ins-completion-menu| messages; for		*shm-c*
-			-- example, "-- XXX completion (YYY)", "match 1 of 2", "The only
-			-- match", "Pattern not found", "Back at original", etc.
-			-- vim.opt.shortmess:append "c"
-
 			local cmp = require "cmp"
-
 			cmp.setup {
 				sources = {
-					-- don't understand why text is included sadly
 					{ name = "nvim_lsp" }, -- lsp source
 					{ name = "path" },
-					{ name = "crates" },
+					{ name = "crates" }, -- should be conditional
 				},
 				-- todo: move these mappings to regular keymap file for consistency
 				mapping = {
