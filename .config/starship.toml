@@ -29,13 +29,13 @@ symbol = "aws "
 [bun]
 symbol = "bun "
 [c]
-symbol = "C "
+symbol = "c "
 [cobol]
 symbol = "cobol "
 [conda]
 symbol = "conda "
 [crystal]
-symbol = "cr "
+symbol = "crystal "
 [cmake]
 symbol = "cmake "
 [daml]
@@ -45,9 +45,9 @@ symbol = "dart "
 [deno]
 symbol = "deno "
 [dotnet]
-symbol = ".NET "
+symbol = ".net "
 [directory]
-read_only = " ro"
+read_only = " read only"
 [docker_context]
 symbol = "docker "
 [elixir]
@@ -63,9 +63,9 @@ symbol = "hg "
 [java]
 symbol = "java "
 [julia]
-symbol = "jl "
+symbol = "julia "
 [kotlin]
-symbol = "kt "
+symbol = "kotlin "
 [lua]
 symbol = "lua "
 [nodejs]
@@ -91,13 +91,13 @@ symbol = "pulumi "
 [purescript]
 symbol = "purs "
 [python]
-symbol = "py "
+symbol = "python "
 [raku]
 symbol = "raku "
 [ruby]
 symbol = "rb "
 [rust]
-symbol = "rs "
+symbol = "rust "
 [scala]
 symbol = "scala "
 [spack]
