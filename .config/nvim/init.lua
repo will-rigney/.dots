@@ -5,23 +5,25 @@
 -- remember to use :h for help text on any option
 
 -- env
-vim.env.BASH_ENV = "$HOME/.bashrc"					-- use env in vim env (needed?)
--- i don't think i even use .bashrc for env
-
--- colours
--- currently rocking with default
--- vim.cmd "colorscheme habamax"						-- set colour scheme
+vim.env.BASH_ENV = "$HOME/.bashrc" -- use bash env in vim env (aliases etc)
 
 -- filetype
-vim.cmd "filetype plugin indent on"					-- enables plugin & indent files
+vim.cmd "filetype plugin indent on" -- enables plugin & indent files
 
 -- map leader
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- providers
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+-- :checkhealth for more information
 
 --- modules
-require 'options'
-require 'lazyinit' -- todo: maybe fold into init file
-require 'statusline'
-require 'keymap'
-require 'netrw'
+require "options"
+require "autocmd"
+require "lazyinit"
+require "statusline"
+require "keymap"
