@@ -5,7 +5,6 @@
 return
 {
 	"folke/which-key.nvim",
-	event = "VeryLazy",
 	opts = {
 		-- preset = "modern", -- classic, modern or helix (modern on the right)
 		preset = "classic",
@@ -13,6 +12,11 @@ return
 			-- exclude mappings without a description
 			return mapping.desc and mapping.desc ~= ""
 		end,
+		plugins = {
+			presets = {
+				windows = false
+			}
+		},
 		icons = {
 			separator = ": ",
 			mappings = false,
@@ -20,7 +24,7 @@ return
 			group = "+", -- symbol prepended to a group
 			ellipsis = "...",
 			-- use the highlights from `WhichKeyIcon`
-			colors = false,
+			colors = true,
 			-- used by key format
 			keys = {
 				C = "<ctrl> ",
@@ -44,6 +48,14 @@ return
 				F11 = "<F11>",
 				F12 = "<F12>",
 			},
+		},
+		show_help = true,
+		show_keys = true,
+		---@type wk.Win.opts
+		win = {
+			-- don't allow the popup to overlap with the cursor
+			no_overlap = true,
+			border = "none",
 		}
 	},
 }
