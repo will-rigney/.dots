@@ -24,7 +24,7 @@ return
 
 			-- todo: if there's a per project vscode launch configuration don't bother with the default ones
 
-			-- todo: make project?
+			-- basic asf configuration
 			dap.configurations.c = {
 				{
 					name = 'default debug (lldb)',
@@ -45,6 +45,9 @@ return
 
 			-- todo: much fancier rust configuration
 			dap.configurations.rust = dap.configurations.c
+
+			-- todo: configuration for python
+
 		end
 	},
 	{
@@ -116,7 +119,7 @@ return
 						position = "bottom",
 						size = 10
 					} },
-					-- whats going on here with these mappings?
+					-- todo: whats going on here with these mappings?
 					mappings = {
 						edit = "e",
 						expand = { "<CR>", "<2-LeftMouse>" },
@@ -132,8 +135,6 @@ return
 				}
 			)
 
-			-- wtf why not open anymore
-
 			-- open on new session
 			dap.listeners.after.event_initialized["dapui_config"] = function()
 				dapui.open()
@@ -148,15 +149,6 @@ return
 			dap.listeners.before.event_exited["dapui_config"] = function()
 				dapui.close()
 			end
-
-			-- dap.listeners.before.disconnect["dapui_config"] = function()
-			-- 	dapui.close()
-			-- end
-
-			-- not sure both are needed here
-			-- dap.listeners.after.event_stopped["dapui_config"] = function()
-			-- 	dapui.close()
-			-- end
 		end
 	}
 }

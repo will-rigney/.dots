@@ -1,12 +1,11 @@
 # .bashrc
 
 # if not running interactively, don't do anything
+# this is to stop aliases affecting bash scripts
 [[ $- != *i* ]] && return
 
 # PS1 (use starship instead anyway)
 PS1='[\u@\h \W]\$ '
-
-. "$HOME/.cargo/env"
 
 # set window title dynamically
 case ${TERM} in
@@ -20,45 +19,19 @@ shopt -s expand_aliases
 
 ## alias
 
-# i think maybe alias should be in profile
-# and less wack / more careful
-
-# fancy ls
-# todo: include extra args, override etc obviously duh
+# fancy ls deeply cursed but i like it
 alias ls='exa -Fl --no-permissions --no-user'
 alias la='exa -Flha'
 
-# zrepl
-# source "$HOME/.zrepl_completions"
-
-# function
-# use wal to update wallpaper * terminal colours
-change-wal () {
-	wp=$1;
-	backend=${2:-1};
-	if [ 2 = $backend ];
-	then
-		backend="schemer2";
-	else
-		backend="pywal"
-	fi
-	echo "Using backend: $backend";
-	wal --backend $backend -i $wp --saturate 0.5 -b "#282c34";
-}
-
-# alias for "dots" managing dots with git
+# use `dots` to manage dots with git
 alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME';
+# use tig to manage dots
+alias dtig='GIT_DIR=$HOME/.dots GIT_WORK_TREE=$HOME /usr/bin/tig'
 
 # rust ugdb alias
 alias rugdb='ugdb --gdb rust-gdb --nh';
 
-# pywal terminal colourscheme
-# (cat ~/.cache/wal/sequences &)
-
-# nvm - should be in .profile
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# todo: maybe move to asdf or something for node, lua, python etc
 
 # init starship prompt
 eval "$(starship init bash)";
