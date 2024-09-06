@@ -6,7 +6,7 @@ return
 {
 	{
 		'nvim-telescope/telescope.nvim',
-		event = "VeryLazy",
+		lazu = true,
 		tag = '0.1.8', -- version (not latest?)
 		dependencies = {
 			'nvim-lua/plenary.nvim',
@@ -14,16 +14,16 @@ return
 	},
 	{
 		'nvim-telescope/telescope-fzf-native.nvim',
-		event = "VeryLazy",
 		build = 'make',
 		dependencies = {
 			'nvim-telescope/telescope.nvim'
 		},
 		config = function()
-			local telescope = require('telescope')
+			local telescope = require 'telescope'
 			telescope.setup {
 				defaults = {
-					border = false
+					border = false,
+					-- todo: remove 1 column gap between results & preview
 				}
 			}
 			telescope.load_extension('fzf')
