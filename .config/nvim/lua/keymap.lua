@@ -107,9 +107,11 @@ set("n", "<leader>cC", "<cmd>CompilerOpen<cr>", { desc = "[c]ode choose [C]ompil
 set("n", "<leader>cR", "<cmd>CompilerToggleResults<cr>", { desc = "[c]ode toggle compiler [R]esults" })
 set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "[c]ode [a]ction" })
 set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "[c]ode [r]ename" })
-set({ 'n', 'v' }, '<leader>cf', vim.lsp.buf.format, { desc = "[c]ode [f]ormat" })
 set('n', '<leader>cd', vim.diagnostic.open_float, { desc = "[c]ode show [d]iagnostic" }) -- todo: maybe an autocmd instead
 set('n', '<leader>cL', '<cmd>LspInfo<cr>', { desc = "[c]ode [L]SP info" })
+
+local conform = require'conform'
+set({ 'n', 'v' }, '<leader>cf', conform.format, { desc = "[c]ode [f]ormat" })
 
 -- todo: conform / autoformat is causing issues, revisit later
 -- map({ 'n', 'v' }, '<leader>cf', function() require("conform").format() end)
