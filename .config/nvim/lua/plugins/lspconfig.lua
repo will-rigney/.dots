@@ -11,33 +11,37 @@ return
 	},
 	config = function()
 		local lsp = require "lspconfig"
-
 		-- setup language servers
+		-- lua
 		lsp.lua_ls.setup {}
+		-- bash
 		lsp.bashls.setup {}
+		-- python
 		lsp.pyright.setup {}
+		-- go
 		lsp.gopls.setup {
 			enhanced_hover = true
 		}
+		-- c/cpp
+		-- todo: not sure we need this with clangd extensions plugin
 		lsp.clangd.setup {
 			filetypes = { "c", "cpp", "cuda", "proto" }
-		} -- todo: not sure we need this with clangd extensions plugin
+		}
+		-- swift, objective c/cpp
 		lsp.sourcekit.setup {
 			filetypes = { "swift", "objective-c", "objective-cpp" },
 		}
+		-- rust
 		lsp.rust_analyzer.setup {
 			settings = {
 				["rust-analyzer"] = {
 					check = {
+						-- lint with clippy
 						command = "clippy",
 					},
 				}
 			}
 		}
-
 		-- todo: .h currently recognised as cpp headers not c (might be fixed with compile_commands.json)
-
-		-- reload for current file
-		vim.api.nvim_exec_autocmds("FileType", {})
 	end
 }
