@@ -20,28 +20,34 @@ return
 		lsp.pyright.setup {}
 		-- go
 		lsp.gopls.setup {
-			enhanced_hover = true
+			enhanced_hover = true,
 		}
+		-- toml
+		lsp.taplo.setup {
+			-- root
+		}
+		-- web (also testing install with mason)
+		lsp.biome.setup {}
 		-- c/cpp
 		-- todo: not sure we need this with clangd extensions plugin
 		lsp.clangd.setup {
-			filetypes = { "c", "cpp", "cuda", "proto" }
+			filetypes = { 'c', 'cpp', 'cuda', 'proto' },
 		}
 		-- swift, objective c/cpp
 		lsp.sourcekit.setup {
-			filetypes = { "swift", "objective-c", "objective-cpp" },
+			filetypes = { 'swift', 'objective-c', 'objective-cpp' },
 		}
 		-- rust
 		lsp.rust_analyzer.setup {
 			settings = {
-				["rust-analyzer"] = {
+				['rust-analyzer'] = {
 					check = {
 						-- lint with clippy
-						command = "clippy",
+						command = 'clippy',
 					},
-				}
-			}
+				},
+			},
 		}
 		-- todo: .h currently recognised as cpp headers not c (might be fixed with compile_commands.json)
-	end
+	end,
 }

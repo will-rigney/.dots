@@ -4,48 +4,53 @@
 
 return {
 	{
-		"hrsh7th/nvim-cmp",
+		'hrsh7th/nvim-cmp',
 		lazy = false,
 		-- note that for e.g. man buffers we could never have to load cmp if this loaded lazy
 		priority = 100,
 		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-nvim-lsp-document-symbol",
-			"rcarriga/cmp-dap"
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-cmdline',
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-nvim-lsp-document-symbol',
+			'hrsh7th/cmp-path',
+			'rcarriga/cmp-dap',
 		},
 		-- todo: only complete after at least one letter typed
 		config = function()
-			local cmp = require "cmp"
+			local cmp = require 'cmp'
 			cmp.setup {
 				sources = {
-					{ name = "nvim_lsp" }, -- lsp source
-					{ name = "crates" },
+					{
+						name = 'lazydev',
+						group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+					},
+					{ name = 'nvim_lsp' },
+					{ name = 'crates' }, -- todo: only in crates files
 				},
 				-- todo: move these mappings to regular keymap file for consistency
 				mapping = {
-					["<Tab>"] = cmp.mapping(function(fallback)
+					['<tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
 						else
 							fallback()
 						end
-					end, { "i", "s" }),
-					["<S-Tab>"] = cmp.mapping(function(fallback)
+					end, { 'i', 's' }),
+					['<s-tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
 						else
 							fallback()
 						end
-					end, { "i", "s" }),
-					["<enter>"] = cmp.mapping(
+					end, { 'i', 's' }),
+					-- todo: only confirm complete if item is selected
+					['<enter>'] = cmp.mapping(
 						cmp.mapping.confirm {
 							behavior = cmp.ConfirmBehavior.Insert,
 							select = true,
 						},
-						{ "i" } -- only insert mode, not command
+						{ 'i' } -- only insert mode, not command
 					),
 				},
 
@@ -67,8 +72,8 @@ return {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
 					{ name = 'nvim_lsp_document_symbol' },
-					{ name = 'buffer' }
-				}
+					{ name = 'buffer' },
+				},
 			})
 
 			-- completions for command mode
@@ -76,15 +81,15 @@ return {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources {
 					{ name = 'cmdline' },
-					{ name = 'path' }
-				}
+					{ name = 'path' },
+				},
 			})
 
 			-- completion in dap debug windows
 			-- not working?
-			cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+			cmp.setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
 				sources = {
-					{ name = "dap" },
+					{ name = 'dap' },
 				},
 			})
 		end,

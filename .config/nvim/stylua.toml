@@ -1,3 +1,13 @@
-indent_type = "Spaces"
-indent_width = 2
-no_call_parentheses = true
+# default roblox style
+indent_type = "Tabs"
+indent_width = 4
+# everything configured to be easiest to read
+call_parentheses = "None"
+quote_style = "AutoPreferSingle"
+# really wide columns for configuration
+column_width = 160
+# closures on single lines
+collapse_simple_statement = "Always"
+# rarely comes up
+[sort_requires]
+enabled = true

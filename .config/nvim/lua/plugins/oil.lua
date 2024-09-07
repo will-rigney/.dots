@@ -9,26 +9,26 @@ return {
 	opts = {
 		default_file_explorer = true,
 		watch_for_changes = true,
-		constrain_cursor = "name",
+		constrain_cursor = 'name',
 		view_options = {
-			show_hidden = true
+			show_hidden = true,
 		},
 		columns = {
-			"permissions",
-			"size",
-			"mtime",
+			'permissions',
+			'size',
+			'mtime',
 		},
 		-- floating entry window
 		float = {
-			border = "none"
+			border = 'none',
 		},
 		-- floating SSH window
 		ssh = {
-			border = "none",
+			border = 'none',
 		},
 		-- floating keymaps help window
 		keymaps_help = {
-			border = "none",
+			border = 'none',
 		},
-	}
+	},
 }
