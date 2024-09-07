@@ -11,13 +11,9 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
-		dependencies = {
-			"rcarriga/nvim-dap-ui"
-		},
 		config = function()
 			local dap = require "dap"
-			-- adapters
-			-- lldb-dap
+			-- lldb adapter
 			dap.adapters.lldb = {
 				type = 'executable',
 				command = '/usr/bin/lldb-dap',
@@ -38,6 +34,7 @@ return {
 	{
 		"rcarriga/nvim-dap-ui",
 		dependencies = {
+			"mfussenegger/nvim-dap",
 			"nvim-neotest/nvim-nio"
 		},
 		config = function()
