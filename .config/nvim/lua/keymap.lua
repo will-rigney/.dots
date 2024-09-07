@@ -35,13 +35,9 @@ set("n", '<leader>?', function() wk.show { global = true } end, { desc = "show b
 
 -- todo: remove <C-w> group
 -- window
+-- more wincmd e.g. H, J, K, L
 set('n', '<leader>w', '<C-w>')
 wk.add({
-	-- { "<leader>w",  proxy - "<c-w>", group = "windows" },
-	-- how do I hide these mappings?
-	-- { "<C-w>d",     hidden = true },
-	-- { "<C-w><C-d>", hidden = true },
-
 	{ "<leader>w",  group = "window" },
 	{ "<leader>w+", desc = "increase height" },
 	{ "<leader>w-", desc = "decrease height" },
