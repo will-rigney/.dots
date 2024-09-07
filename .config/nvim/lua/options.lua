@@ -25,10 +25,10 @@ vim.opt.smartindent = true -- insert indents automatically
 vim.opt.undofile = true -- save undo history
 
 -- tabs
--- todo: override per filetype with filetype plugin
-vim.opt.tabstop = 4     -- use hard tabs width 4
+-- defaults, override per filetype with ftplugin
+vim.opt.tabstop = 8     -- use hard tabs width 4
 vim.opt.softtabstop = 0 -- disable soft tab stop
-vim.opt.shiftwidth = 4  -- shift same as tab width
+vim.opt.shiftwidth = 8  -- shift same as tab width
 
 -- scroll
 vim.opt.scrolloff = 8     -- scroll 8 lines from bottom
