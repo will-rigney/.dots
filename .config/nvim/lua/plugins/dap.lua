@@ -29,7 +29,10 @@ return {
 	},
 	{
 		"mfussenegger/nvim-dap-python",
-		ft = "python"
+		ft = "python",
+		config = function()
+			require('dap-python').setup()
+		end
 	},
 	{
 		"rcarriga/nvim-dap-ui",
@@ -72,27 +75,28 @@ return {
 							},
 							{
 								id = "stacks",
-								size = 0.20
+								size = 0.15
 							},
 							{
 								id = "breakpoints",
-								size = 0.20
+								size = 0.15
 							},
 							{
 								id = "watches",
-								size = 0.20
+								size = 0.15
+							},
+							{
+								id = "console",
+								size = 0.15
 							}
 						},
 						position = "right",
 						size = 60
 					},
 					{
-						elements = { "repl" },
-						-- also maybe later
-						-- 			, {
-						-- 	id = "console",
-						-- 	size = 0.4
-						-- }
+						elements = {
+							"repl",
+						},
 						position = "bottom",
 						size = 8,
 					}
