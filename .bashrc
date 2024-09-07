@@ -14,22 +14,17 @@ case ${TERM} in
 	;;
 esac
 
-# todo: should aliases be here or .profile
-shopt -s expand_aliases
 
 ## alias
 
-# fancy ls deeply cursed but i like it
+# fancy cursed ls
 alias ls='exa -Fl --no-permissions --no-user'
 alias la='exa -Flha'
 
 # use `dots` to manage dots with git
 alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME';
-# use tig to manage dots
-alias dtig='GIT_DIR=$HOME/.dots GIT_WORK_TREE=$HOME /usr/bin/tig'
-
-# rust ugdb alias
-alias rugdb='ugdb --gdb rust-gdb --nh';
+# open dots shell add git env vars to session
+alias dotsh='GIT_DIR=$HOME/.dots GIT_WORK_TREE=$HOME /usr/bin/bash'
 
 # todo: maybe move to asdf or something for node, lua, python etc
 
