@@ -1,4 +1,5 @@
 -- use lua style indentation
-vim.opt.tabstop = 2     -- use hard tabs width 4
-vim.opt.softtabstop = 2 -- disable soft tab stop
-vim.opt.shiftwidth = 2  -- shift same as tab width
+-- todo: this should respect stylua
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 0 
