@@ -5,7 +5,8 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		lazy = false, -- wrong -- increases load time but doesn't need reloading for current buffer
+		lazy = false,
+		-- note that for e.g. man buffers we could never have to load cmp if this loaded lazy
 		priority = 100,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
@@ -13,7 +14,7 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lsp-document-symbol",
-			"rcarriga/cmp-dap" -- is this dependency? what about crates
+			"rcarriga/cmp-dap"
 		},
 		-- todo: only complete after at least one letter typed
 		config = function()
@@ -21,8 +22,7 @@ return {
 			cmp.setup {
 				sources = {
 					{ name = "nvim_lsp" }, -- lsp source
-					{ name = "path" },
-					{ name = "crates" }, -- should be conditional
+					{ name = "crates" },
 				},
 				-- todo: move these mappings to regular keymap file for consistency
 				mapping = {
@@ -70,6 +70,7 @@ return {
 					{ name = 'buffer' }
 				}
 			})
+
 			-- completions for command mode
 			cmp.setup.cmdline(':', {
 				mapping = cmp.mapping.preset.cmdline(),
@@ -77,6 +78,14 @@ return {
 					{ name = 'cmdline' },
 					{ name = 'path' }
 				}
+			})
+
+			-- completion in dap debug windows
+			-- not working?
+			cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+				sources = {
+					{ name = "dap" },
+				},
 			})
 		end,
 	},
