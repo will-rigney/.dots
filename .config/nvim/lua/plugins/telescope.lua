@@ -1,32 +1,31 @@
 -- telescope
 -- unified fuzzy finding
+
 -- https://github.com/nvim-telescope/telescope.nvim
 
 return {
 	{
 		'nvim-telescope/telescope.nvim',
-		lazu = true,
 		tag = '0.1.8', -- version (not latest?)
 		dependencies = {
 			'nvim-lua/plenary.nvim',
-		},
-		-- keys = {}
-	},
-	{
-		'nvim-telescope/telescope-fzf-native.nvim',
-		build = 'make',
-		dependencies = {
-			'nvim-telescope/telescope.nvim',
+			'nvim-telescope/telescope-fzf-native.nvim',
 		},
 		config = function()
 			local telescope = require 'telescope'
+			-- ---@type telescope.Config
 			telescope.setup {
 				defaults = {
-					border = false,
-					-- todo: remove 1 column gap between results & preview
+					border = true,
+					-- empty borderchars to disable border without leaving gap
+					borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
 				},
 			}
 			telescope.load_extension 'fzf'
 		end,
+	},
+	{
+		'nvim-telescope/telescope-fzf-native.nvim',
+		build = 'make',
 	},
 }
