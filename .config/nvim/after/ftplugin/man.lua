@@ -4,6 +4,6 @@
 " this should actually open in right split if one is open already
 " vim.cmd [[wincmd L]]
 " no set or anything
-syntax on
-wincmd L
+vim.cmd 'syntax on'
+vim.cmd 'wincmd L'
 "signcolumn off
