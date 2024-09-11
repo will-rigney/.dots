@@ -2,32 +2,17 @@
 --- statusline ---
 ------------------
 
--- very basic for now, probably fine like this
+-- very basic, fine like this
+
+-- todo: would like alpha buffer Scratch to have a different name
 
 local function status_line()
-	local file_name = "%-.16t" -- todo: how does this formatting work
-	local buf_nr = "[%n]"
-	local modified = " %-m"
-	local file_type = " %y"
-	local right_align = "%="
-	local line_no = "%10([%l/%L%)]"
-	local pct_thru_file = "%5p%%"
-
-	return string.format(
-		"%s%s%s%s%s%s%s",
-		file_name,
-		buf_nr,
-		modified,
-		file_type,
-		right_align,
-		line_no,
-		pct_thru_file
-	)
+	local file_name = '%-.32t'
+	local modified = ' %-m'
+	local file_type = ' %y'
+	local right_align = '%='
+	local line_no = '%10([%l/%L%)]'
+	return string.format('  %s%s%s%s%s ', file_name, modified, file_type, right_align, line_no)
 end
-
--- todo:
---  - show number of buffers?
---  - filename truncated too soon
---  - show mode in pretty colours or don't
 
 vim.opt.statusline = status_line()
