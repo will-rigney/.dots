@@ -33,6 +33,10 @@ todo: add & confirm information on how to install all of these things, at least 
 no auto-installing, fail quietly if unable to load lsp for given filetype.
 install through system repository wherever possible, especially:
 
+should avoid in future:
+`alias luamake="/home/will/dev/lua-language-server/3rd/luamake/luamake"`
+being added to .bashrc
+
 - lldb-dap
 - clangd
 
