@@ -15,7 +15,7 @@ return {
 		keymaps = {
 			['g?'] = 'actions.show_help',
 			['<CR>'] = 'actions.select',
-			-- <C-s> & <C-h> is wrong, should be same as bindings elsewhere
+			-- <C-s> & <C-h> is wrong, should be same as bindings elsewhere e.g. telescope
 			['<C-s>'] = { 'actions.select', opts = { vertical = true }, desc = 'open the entry in a vertical split' },
 			['<C-h>'] = { 'actions.select', opts = { horizontal = true }, desc = 'open entry in a horizontal split' },
 			['<C-t>'] = { 'actions.select', opts = { tab = true }, desc = 'open entry in new tab' },

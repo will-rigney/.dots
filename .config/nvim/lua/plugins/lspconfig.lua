@@ -113,6 +113,7 @@ return {
 		}
 		-- marksman (markdown)
 		-- requires manual server installation
+		-- todo: this isn't working if it can't detect root?
 		lspconfig.marksman.setup {
 			single_file_support = true,
 		}
@@ -127,6 +128,7 @@ return {
 			settings = {
 				json = {
 					-- validate schemas very nice
+					-- todo: verify this schemastore stuff with some json w known schema
 					schemas = require('schemastore').json.schemas(),
 					validate = { enable = true },
 				},
