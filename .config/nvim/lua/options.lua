@@ -6,6 +6,8 @@
 -- vim.opt_global: behaves like :setglobal
 -- vim.opt_local: behaves like :setlocal
 
+-- deactivate non-treesitter syntax highlighting (harsh but fair)
+vim.cmd 'syntax off'
 
 vim.opt.number = true -- show line numbers
 vim.opt.relativenumber = true -- relative line numbers
@@ -50,7 +52,7 @@ vim.opt.splitright = true
 vim.opt_global.showcmd = false -- don't show key just pressed (flashing hjkl in bottom corner)
 
 -- vim.opt.colorcolumn = '80' -- superior 80 column marker
--- todo: override per filetype, probably have keybind to toggle marker
+-- todo: override column marker per filetype, keybind to toggle
 
 -- wrap
 vim.opt.linebreak = true -- break on word boundary, see breakat string

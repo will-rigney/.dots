@@ -1,6 +1,6 @@
-" this should be crystal.lua then manually start the lsp with filetype?
-" to avoid crystalline autocmd starting the server twice
-" maybe in the config for vim-crystal
+" this should be crystal.lua then start the lsp with filetype autocmd
+" maybe in the config for vim-crystal? or wherever it is now is fine
+
 " no treesitter parsing for crystal, using vimcrystal extension instead
-" todo: should this not be in after?
+" todo: this should be buffer local for crystal right
 syntax on
