@@ -38,6 +38,7 @@ set('n', '<leader>i', '<c-i>', { desc = 'into the jumplist' })
 set('n', '<leader>o', '<c-o>', { desc = 'out of the jumplist' })
 
 -- todo: think about window navigation with <leader>hjkl instead of buffer / tab
+-- todo: should move to side window or to next tab if no window in that direction
 
 --- window
 -- todo: more wincmd e.g. H, J, K, L
@@ -84,10 +85,7 @@ set('n', '<leader>R', ':w !', { desc = 'run program on buffer contents' })
 -- clear search highlights with escape
 set('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = 'clear search highlight' })
 
--- main navigation keys (todo: hydra mode)
--- bit experimental
--- todo: should move to side window or to next tab if no window in that direction
--- very clever navigation
+-- main navigation keys (bit experimental, todo: hydra mode) 
 set('n', '<leader>h', '<cmd>tabprevious<cr>')
 set('n', '<leader>l', '<cmd>tabnext<cr>')
 set('n', '<leader>j', '<cmd>bprevious<cr>')
@@ -111,7 +109,6 @@ set('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = '[p]revious' })
 set('n', '<leader>tc', '<cmd>tabnew<cr>', { desc = '[c]reate' })
 
 -- oil vinegar bind
--- set('n', '-', '<cmd>Oil<cr>', { desc = 'open parent directory' })
 set('n', '-', function () require('oil').open() end, { desc = 'open parent directory' })
 
 -- todo: either don't have these binds if no lsp or replace with treesitter equivalents
@@ -122,17 +119,6 @@ set('n', 'gT', vim.lsp.buf.type_definition, { buffer = 0, desc = '[g]o to [T]ype
 set('n', 'gi', vim.lsp.buf.implementation, { desc = '[g]o to [T]ype definition' })
 
 --- code
--- todo: toggle diagnostic virtual text display
--- todo: currently falls back to a slightly more default looking version on the same thing
--- set('n', '<leader>cD', function()
--- 	-- local hidden = vim.diagnostic.get_
--- 	-- how to toggle virtual text?
--- 	vim.diagnostic.config {
--- 		virtual_text = {
--- 			virt_text_hide = true,
--- 		},
--- 	}
--- end)
 
 -- todo: scroll hover display & q to close, everything except q closes currently
 set('n', 'K', vim.lsp.buf.hover, { desc = 'hover lsp documentation' })
@@ -189,37 +175,31 @@ set('n', '<leader>ro', '<cmd>source $HOME/.config/nvim/lua/options.lua<cr>', { d
 set('n', '<leader>rk', '<cmd>source $HOME/.config/nvim/lua/keymap.lua<cr>', { desc = '[k]eymap' })
 set('n', '<leader>rl', '<cmd>source $HOME/.config/nvim/lua/statusline.lua<cr>', { desc = '[s]tatusline' })
 
--- open lazy
-set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'open [L]azy' })
-
---- terminal
+--- applications
+-- lazy
+set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'open [L]azy' }) -- will fail if lazy not loaded
+-- alpha
 set({ 'n' }, '<leader>A', function() require('alpha').start(false) end, { desc = '[A]lpha' })
+-- terminal
+-- todo: review this terminal escape thing, flatten means no more nested terms so might be ok
+set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' })
 set({ 'n' }, '<leader>T', ':terminal<cr>', { desc = '[T]erminal' })
--- terminal applications
 set({ 'n' }, '<leader>G', ':terminal tig<cr>', { desc = 'ti[G]' })
 set({ 'n' }, '<leader>H', ':terminal htop<cr>', { desc = '[H]top' })
 set({ 'n' }, '<leader>N', ':terminal clx<cr>', { desc = 'hacker [N]ews' })
--- kinda weird binding see how it goes
--- todo: should somehow be more fancy
+-- todo: kinda weird binding see how it goes, should somehow be more fancy
 set('n', '<leader><leader>', ':terminal ', { desc = 'run terminal command' })
-
--- todo: review this terminal escape thing, flatten means no more nested terms so might be ok
-set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' })
-
--- following needs to be set in plugin config
+-- following needs to be set in plugin config in this weird format to facilitate lazy loading
 --- debug
--- in this weird format to facilitate lazy loading
 set('n', '<leader>db', function() require('dap').toggle_breakpoint() end, { desc = 'toggle [b]reakpoint' })
 set('n', '<leader>dn', function() require('dap').continue() end, { desc = '[n]ew session' })
 
 --- git
--- i see
--- local gitsigns = require 'gitsigns'
 -- navigation
 set('n', ']h', function() require'gitsigns'.nav_hunk 'next' end, { desc = 'next hunk' })
 set('n', '[h', function() require'gitsigns'.nav_hunk 'prev' end, { desc = 'previous hunk' })
 -- text object
-set({ 'o', 'x' }, 'ih', '<cmd>gitsigns select_hunk<CR>', { desc = 'inner hunk' })
+set({ 'o', 'x' }, 'ih', function () require'gitsigns'.select_hunk() end, { desc = 'inner hunk' })
 -- diff
 set('n', '<leader>gd', function () require'gitsigns'.preview_hunk() end, { desc = '[d]iff hunk' })
 -- blame
