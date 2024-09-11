@@ -2,31 +2,44 @@
 --- keybinds ---
 ----------------
 
+-- todo: new project: don't have the group name in the individual bind descriptions
+-- todo: don't close window when we delete a buffer, move to next buffer in same window
+-- todo: same with tabs, dont close when deleting buffers
+
 -- vim users really have to gall to say emacs pinky
 
 -- todo: figure out how to remove so much dependence on control key, maybe bind capslock held to control pressed to escape (seems like some nerd brittleness)
 
 local set = vim.keymap.set
 
--- setup groups for which key
+--- which-key 
 local wk = require 'which-key'
+-- groups
 set('n', '<leader>?', function() wk.show { global = true } end, { desc = 'show buffer local keymaps' })
 wk.add {
-	{ '<leader>b', group = '+buffer' },
-	{ '<leader>c', group = '+code' },
-	{ '<leader>d', group = '+debug' },
-	{ '<leader>f', group = '+find' },
-	{ '<leader>r', group = '+reload' },
-	{ '<leader>t', group = '+tab' },
+	{ '<leader>b', group = '+[b]uffer' },
+	{ '<leader>c', group = '+[c]ode' },
+	{ '<leader>d', group = '+[d]ebug' },
+	{ '<leader>f', group = '+[f]ind' },
+	{ '<leader>r', group = '+[r]eload' },
+	{ '<leader>t', group = '+[t]ab' },
 	{ '<leader>', group = '+leader' },
-	{ '<leader>g', group = '+git' },
+	{ '<leader>g', group = '+[g]it' },
 	{ '[', group = '+jump previous' },
 	{ ']', group = '+jump next' },
 	{ 'g', group = '+mystic g' },
 	{ 'z', group = '+folds+scrolls' },
+	{ ';', desc = 'jump to next f/t-result.' },
+	{ '<c-i>', desc = 'into the jumplist' },
+	{ '<c-o>', desc = 'out of the jumplist' },
 }
 
--- window
+set('n', '<leader>i', '<c-i>', { desc = 'into the jumplist' })
+set('n', '<leader>o', '<c-o>', { desc = 'out of the jumplist' })
+
+-- todo: think about window navigation with <leader>hjkl instead of buffer / tab
+
+--- window
 -- todo: more wincmd e.g. H, J, K, L
 set('n', '<leader>w', '<C-w>')
 wk.add {
@@ -52,161 +65,174 @@ wk.add {
 }
 
 -- add Z options
-wk.add {
-	{ 'Z', group = 'quit' },
-	{ 'ZZ', desc = 'save and quit buffer' },
-	{ 'ZQ', desc = 'quit buffer without saving' },
-}
--- custom Zz write (not sure this is that useful binding)
-set('n', 'Zz', '<cmd>write<cr>', { desc = 'write buffer' })
+-- wk.add {
+-- 	{ 'Z', group = '+quit' },
+	-- overridden currently:
+	-- { 'ZZ', desc = 'save and quit buffer' },
+	-- { 'ZQ', desc = 'quit buffer without saving' },
+-- }
+-- forget those other Z binds
+set('n', 'Z', '<cmd>write<cr>', { desc = 'write buffer' })
 
 -- remove default <C-W> diagnostic bindings
 set('n', '<C-W>d', '')
 set('n', '<C-W><C-D>', '')
 
--- todo: don't close window when we delete a buffer, move to next buffer in same window
--- todo: same with tabs, dont close when deleting buffers
+-- run current buffer contents in program
+set('n', '<leader>R', ':w !', { desc = 'run program on buffer contents' })
 
 -- clear search highlights with escape
 set('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = 'clear search highlight' })
 
 -- main navigation keys (todo: hydra mode)
 -- bit experimental
+-- todo: should move to side window or to next tab if no window in that direction
+-- very clever navigation
 set('n', '<leader>h', '<cmd>tabprevious<cr>')
 set('n', '<leader>l', '<cmd>tabnext<cr>')
 set('n', '<leader>j', '<cmd>bprevious<cr>')
 set('n', '<leader>k', '<cmd>bnext<cr>')
 
 -- buffer
-set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = '[b]uffer [d]elete' })
-set('n', '<leader>bk', '<cmd>bdelete!<cr>', { desc = '[b]uffer [k]ill (warning: save first)' })
-set('n', '<leader>bn', '<cmd>bnext<cr>', { desc = '[b]uffer [n]ext' })
-set('n', '<leader>bp', '<cmd>bprevious<cr>', { desc = '[b]uffer [p]revious' })
-set('n', '<leader>bc', '<cmd>enew<cr>', { desc = '[b]uffer [c]reate' })
+-- todo: I don't want this to delete the window normally, just go to a different open buffer and delete the current one
+-- should be like bprevious but the open buffer is removed from buffer list
+set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = '[d]elete' })
+set('n', '<leader>bk', '<cmd>bdelete!<cr>', { desc = '[k]ill (warning: save first)' })
+set('n', '<leader>bn', '<cmd>bnext<cr>', { desc = '[n]ext' })
+set('n', '<leader>bp', '<cmd>bprevious<cr>', { desc = '[p]revious' })
+set('n', '<leader>bc', '<cmd>enew<cr>', { desc = '[c]reate' })
 
 -- tab
 set('n', '<leader>th', '<cmd>tabprevious<cr>')
 set('n', '<leader>tl', '<cmd>tabnext<cr>')
-set('n', '<leader>td', '<cmd>tabclose<cr>', { desc = '[t]ab [d]elete' })
-set('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = '[t]ab [n]ext' })
-set('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = '[t]ab [p]revious' })
-set('n', '<leader>tc', '<cmd>tabnew<cr>', { desc = '[t]ab [c]reate' })
+set('n', '<leader>td', '<cmd>tabclose<cr>', { desc = '[d]elete' })
+set('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = '[n]ext' })
+set('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = '[p]revious' })
+set('n', '<leader>tc', '<cmd>tabnew<cr>', { desc = '[c]reate' })
 
 -- oil vinegar bind
-set('n', '-', '<cmd>Oil<cr>', { desc = 'open parent directory' })
+-- set('n', '-', '<cmd>Oil<cr>', { desc = 'open parent directory' })
+set('n', '-', function () require('oil').open() end, { desc = 'open parent directory' })
 
+-- todo: either don't have these binds if no lsp or replace with treesitter equivalents
 -- mystic g
 set('n', 'gd', vim.lsp.buf.definition, { desc = '[g]o to [d]efinition' })
 set('n', 'gD', vim.lsp.buf.declaration, { desc = '[g]o to [D]eclaration' })
 set('n', 'gT', vim.lsp.buf.type_definition, { buffer = 0, desc = '[g]o to [T]ype definition' }) -- why is buffer needed?
 set('n', 'gi', vim.lsp.buf.implementation, { desc = '[g]o to [T]ype definition' })
 
--- code
+--- code
+-- todo: toggle diagnostic virtual text display
+-- todo: currently falls back to a slightly more default looking version on the same thing
+-- set('n', '<leader>cD', function()
+-- 	-- local hidden = vim.diagnostic.get_
+-- 	-- how to toggle virtual text?
+-- 	vim.diagnostic.config {
+-- 		virtual_text = {
+-- 			virt_text_hide = true,
+-- 		},
+-- 	}
+-- end)
+
 -- todo: scroll hover display & q to close, everything except q closes currently
 set('n', 'K', vim.lsp.buf.hover, { desc = 'hover lsp documentation' })
-set('n', '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', { desc = '[c]ode switch source [h]eader' })
--- todo: change this to picker if compilation option not currently picked
--- todo: also autoclose compile window, maybe use different system
-set('n', '<leader>cc', '<cmd>CompilerRedo<cr>', { desc = '[c]ode redo [c]ompile', silent = true })
-set('n', '<leader>cC', '<cmd>CompilerOpen<cr>', { desc = '[c]ode choose [C]ompile option' })
-
--- todo: remove this binding replace with autoclosing on successful compile
-set('n', '<leader>cR', '<cmd>CompilerToggleResults<cr>', { desc = '[c]ode toggle compiler [R]esults' })
-
 set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[c]ode [a]ction' })
-set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[c]ode [r]ename' })
-set('n', '<leader>cd', vim.diagnostic.open_float, { desc = '[c]ode show [d]iagnostic' }) -- todo: maybe an autocmd instead
--- todo: remove ugly default diagnostic binds or actually just have which-key ignore them
-set('n', '<leader>cL', '<cmd>LspInfo<cr>', { desc = '[c]ode [L]SP info' })
+set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[r]ename' })
+set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'show [d]iagnostic' })
 
-local conform = require 'conform'
-set({ 'n', 'v' }, '<leader>cf', conform.format, { desc = '[c]ode [f]ormat' })
+-- todo: trigger lazy load too? or map only on lsp load (seems confusing)
+set('n', '<leader>cL', '<cmd>LspInfo<cr>', { desc = '[L]SP info' })
 
--- todo: conform / autoformat is causing issues, revisit later
--- map({ 'n', 'v' }, '<leader>cf', function() require("conform").format() end)
+-- todo: definitely change to lazy spec (instead of commands)
+-- todo: change this to picker if compilation option not currently picked
+set('n', '<leader>cc', '<cmd>CompilerRedo<cr>', { desc = 'redo [c]ompile', silent = true })
+set('n', '<leader>cC', '<cmd>CompilerOpen<cr>', { desc = 'choose [C]ompile option' })
+-- todo: remove this binding replace with autoclosing on successful compile
+set('n', '<leader>cR', '<cmd>CompilerToggleResults<cr>', { desc = 'toggle compiler [R]esults' })
+-- todo: maybe use different system than compiler.nvim plugin - just?
+
+set({ 'n', 'v' }, '<leader>cf', function() require('conform').format() end, { desc = '[f]ormat' })
 
 -- telescope builtin mappings
-local builtin = require 'telescope.builtin'
+-- for very verbose mappings get lazy loading
 -- todo: this should sort results by line number
-set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'fuzzy search current buffer' })
-set('n', '<leader>:', builtin.commands, { desc = 'fuzzy run command' })
-set('n', '<leader>C', function() builtin.colorscheme { enable_preview = true } end, { desc = '[C]olour schemes' })
--- find
--- set('n', '<leader>ff', builtin.find_files, { desc = "[f]ind [f]ile" })
-set('n', '<leader>ff', builtin.fd, { desc = '[f]ind [f]ile' })
-set('n', '<leader>fF', function() builtin.find_files { hidden = true } end, { desc = '[f]ind hidden [F]ile' })
-set('n', '<leader>fg', builtin.live_grep, { desc = '[f]ind [g]rep' })
-set('n', '<leader>fb', builtin.buffers, { desc = '[f]ind [b]uffer' })
-set('n', '<leader>fh', builtin.help_tags, { desc = '[f]ind [h]elp' })
-set('n', '<leader>fs', builtin.grep_string, { desc = '[f]ind [s]tring' })
-set('n', '<leader>fm', builtin.man_pages, { desc = '[f]ind [m]an page' })
+set('n', '<leader>/', function() require('telescope.builtin').current_buffer_fuzzy_find() end, { desc = 'fuzzy search current buffer' })
+set('n', '<leader>:', function() require('telescope.builtin').commands() end, { desc = 'fuzzy run command' })
+set('n', '<leader>C', function() require('telescope.builtin').colorscheme { enable_preview = true } end, { desc = '[C]olour schemes' })
+--- find
+set('n', '<leader>ff', function() require('telescope.builtin').fd() end, { desc = '[f]ile' })
+set('n', '<leader>fF', function() require('telescope.builtin').find_files { hidden = true } end, { desc = 'hidden [F]ile' })
+set('n', '<leader>fr', function() require('telescope.builtin').oldfiles() end, { desc = '[r]ecent files' })
+-- todo: would be cool to have tree sitter completions here
+set('n', '<leader>fg', function() require('telescope.builtin').live_grep() end, { desc = '[g]rep' })
+set('n', '<leader>ft', function() require('telescope.builtin').treesitter() end, { desc = '[t]reesitter' })
+set('n', '<leader>fb', function() require('telescope.builtin').buffers() end, { desc = '[b]uffer' })
+set('n', '<leader>fh', function() require('telescope.builtin').help_tags() end, { desc = '[h]elp' })
+set('n', '<leader>fs', function() require('telescope.builtin').grep_string() end, { desc = '[s]tring' })
+set('n', '<leader>fm', function() require('telescope.builtin').man_pages() end, { desc = '[m]an page' })
 -- this will checkout the chosen commit on <cr>
-set('n', '<leader>fc', builtin.git_bcommits, { desc = '[f]ind buffer [c]ommits' })
-set('n', '<leader>fC', builtin.git_commits, { desc = '[f]ind directory [C]ommits' })
-set('n', '<leader>fD', builtin.git_status, { desc = '[f]ind git [D]iff' }) -- maybe different bind... -- very powerful for searching diffs
-set('n', '<leader>fG', builtin.git_files, { desc = '[f]ind [G]it files' })
-
+set('n', '<leader>fc', function() require('telescope.builtin').git_bcommits() end, { desc = 'buffer [c]ommits' })
+set('n', '<leader>fC', function() require('telescope.builtin').git_commits() end, { desc = 'directory [C]ommits' })
+set('n', '<leader>fD', function() require('telescope.builtin').git_status() end, { desc = 'git [D]iff' }) -- maybe different bind... -- very powerful for searching diffs
+set('n', '<leader>fG', function() require('telescope.builtin').git_files() end, { desc = '[G]it files' })
 -- find with lsp
-set('n', '<leader>fs', builtin.lsp_document_symbols, { desc = '[f]ind document [s]ymbols' })
-set('n', '<leader>fS', builtin.lsp_workspace_symbols, { desc = '[f]ind workspace [S]ymbols' }) -- weirdly only has types, at least in rust-analyzer
-set('n', '<leader>fr', builtin.lsp_references, { desc = '[f]ind [r]eferences' })
-set('n', '<leader>fi', builtin.lsp_implementations, { desc = '[f]ind [i]mplementations' })
-set('n', '<leader>fd', builtin.diagnostics, { desc = '[f]ind [d]iagnostics' })
-
-set('n', '<leader>fR', builtin.oldfiles, { desc = '[f]ind [R]eopen' })
+set('n', '<leader>fs', function() require('telescope.builtin').lsp_document_symbols() end, { desc = 'document [s]ymbols' })
+set('n', '<leader>fS', function() require('telescope.builtin').lsp_workspace_symbols() end, { desc = 'workspace [S]ymbols' }) -- weirdly only has types, at least in rust-analyzer
+set('n', '<leader>fR', function() require('telescope.builtin').lsp_references() end, { desc = '[R]eferences' })
+set('n', '<leader>fi', function() require('telescope.builtin').lsp_implementations() end, { desc = '[i]mplementations' })
+set('n', '<leader>fd', function() require('telescope.builtin').diagnostics() end, { desc = '[d]iagnostics' })
 
 -- reload config files
-set('n', '<leader>rc', '<cmd>source $HOME/.config/nvim/init.lua<cr>', { desc = '[r]eload [c]onfig' }) -- init.lua
-set('n', '<leader>rk', '<cmd>source $HOME/.config/nvim/lua/keymap.lua<cr>', { desc = '[r]eload [k]eymap' }) -- keybinds
-set('n', '<leader>rl', '<cmd>source $HOME/.config/nvim/lua/statusline.lua<cr>', { desc = '[r]eload [s]tatusline' }) -- statusline
+-- todo: maybe add some bindings to open these files in new buffers with config as the root or lsp disabled
+-- set('n', '<leader>rc', '<cmd>source $HOME/.config/nvim/init.lua<cr>', { desc = '[r]eload [c]onfig' })
+set('n', '<leader>ro', '<cmd>source $HOME/.config/nvim/lua/options.lua<cr>', { desc = '[o]ptions' })
+set('n', '<leader>rk', '<cmd>source $HOME/.config/nvim/lua/keymap.lua<cr>', { desc = '[k]eymap' })
+set('n', '<leader>rl', '<cmd>source $HOME/.config/nvim/lua/statusline.lua<cr>', { desc = '[s]tatusline' })
 
 -- open lazy
 set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'open [L]azy' })
 
--- terminal
-set({ 'n' }, '<leader>T', ':terminal<cr>', { desc = 'open [T]erminal' }) -- open terminal
-set({ 'n' }, '<leader>G', ':terminal tig<cr>', { desc = 'open ti[G]' }) -- open terminal
-set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' }) -- escape from terminal
+--- terminal
+set({ 'n' }, '<leader>A', function() require('alpha').start(false) end, { desc = '[A]lpha' })
+set({ 'n' }, '<leader>T', ':terminal<cr>', { desc = '[T]erminal' })
+-- terminal applications
+set({ 'n' }, '<leader>G', ':terminal tig<cr>', { desc = 'ti[G]' })
+set({ 'n' }, '<leader>H', ':terminal htop<cr>', { desc = '[H]top' })
+set({ 'n' }, '<leader>N', ':terminal clx<cr>', { desc = 'hacker [N]ews' })
+-- kinda weird binding see how it goes
+-- todo: should somehow be more fancy
+set('n', '<leader><leader>', ':terminal ', { desc = 'run terminal command' })
 
--- debug
-local dap = require 'dap'
-set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'toggle [d]ebug [b]reakpoint' })
-set('n', '<leader>dn', '<cmd>DapNew<cr>', { desc = '[d]ebug [n]ew session' })
+-- todo: review this terminal escape thing, flatten means no more nested terms so might be ok
+set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' })
 
-set('n', '<F1>', dap.continue)
--- vim.keymap.set("n", "<F1>", dap.pause) -- no bind for pause currently
-set('n', '<F2>', dap.step_into)
-set('n', '<F3>', dap.step_over)
-set('n', '<F4>', dap.step_out)
-set('n', '<F5>', dap.step_back)
-set('n', '<F6>', dap.restart)
-set('n', '<F7>', dap.stop) -- dap.stop & dap.close both don't seem to do anything
-set('n', '<F8>', dap.disconnect)
+-- following needs to be set in plugin config
+--- debug
+-- in this weird format to facilitate lazy loading
+set('n', '<leader>db', function() require('dap').toggle_breakpoint() end, { desc = 'toggle [b]reakpoint' })
+set('n', '<leader>dn', function() require('dap').continue() end, { desc = '[n]ew session' })
 
--- note that nvim-dap is generally compatible with .vscode/launch.json config files
-
--- git
-local gitsigns = require 'gitsigns'
+--- git
+-- i see
+-- local gitsigns = require 'gitsigns'
 -- navigation
-set('n', ']h', function() gitsigns.nav_hunk 'next' end, { desc = 'next hunk' })
-set('n', '[h', function() gitsigns.nav_hunk 'prev' end, { desc = 'previous hunk' })
+set('n', ']h', function() require'gitsigns'.nav_hunk 'next' end, { desc = 'next hunk' })
+set('n', '[h', function() require'gitsigns'.nav_hunk 'prev' end, { desc = 'previous hunk' })
 -- text object
 set({ 'o', 'x' }, 'ih', '<cmd>gitsigns select_hunk<CR>', { desc = 'inner hunk' })
 -- diff
-set('n', '<leader>gd', gitsigns.preview_hunk, { desc = '[g]it [d]iff hunk' })
+set('n', '<leader>gd', function () require'gitsigns'.preview_hunk() end, { desc = '[d]iff hunk' })
 -- blame
-set('n', '<leader>gb', gitsigns.toggle_current_line_blame, { desc = '[g]it [b]lame' })
+set('n', '<leader>gb', function () require'gitsigns'.toggle_current_line_blame() end, { desc = '[b]lame' })
 -- stage
-set('n', '<leader>gs', gitsigns.stage_hunk, { desc = '[g]it [s]tage hunk' })
-set('v', '<leader>gs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[g]it [s]tage visual selection' })
-set('n', '<leader>gS', gitsigns.stage_buffer, { desc = '[g]it [S]tage buffer' })
+set('n', '<leader>gs', function () require'gitsigns'.stage_hunk() end, { desc = '[s]tage hunk' })
+set('v', '<leader>gs', function() require'gitsigns'.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[s]tage visual selection' })
+set('n', '<leader>gS', function() require'gitsigns'.stage_buffer() end, { desc = '[S]tage buffer' })
 -- unstage
-set('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = '[g]it [u]nstage hunk' })
-set('v', '<leader>gu', function() gitsigns.undo_stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[g]it [u]nstage visual selection' })
+set('n', '<leader>gu', function () require'gitsigns'.undo_stage_hunk() end, { desc = '[u]nstage hunk' })
+set('v', '<leader>gu', function() require'gitsigns'.undo_stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[u]nstage visual selection' })
 -- reset
-set('n', '<leader>gr', gitsigns.reset_hunk, { desc = '[g]it [r]eset hunk' })
-set('v', '<leader>gr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[g]it [r]eset visual selection' })
-set('n', '<leader>gR', gitsigns.reset_buffer, { desc = '[g]it [R]eset buffer' })
-set('n', '<leader>gt', gitsigns.toggle_signs, { desc = '[g]it [t]oggle signs' })
-
--- todo: stage line would be nice (like in tig)
+set('n', '<leader>gr', function () require'gitsigns'.reset_hunk() end, { desc = '[r]eset hunk' })
+set('v', '<leader>gr', function() require'gitsigns'.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[r]eset visual selection' })
+set('n', '<leader>gR', function () require'gitsigns'.reset_buffer() end, { desc = '[R]eset buffer' })
+set('n', '<leader>gt', function () require'gitsigns'.toggle_signs() end, { desc = '[t]oggle signs' })
