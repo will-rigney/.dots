@@ -4,6 +4,7 @@
 
 return {
 	'lewis6991/gitsigns.nvim',
+	lazy = true,
 	opts = {
 		preview_config = {
 			border = 'none',
