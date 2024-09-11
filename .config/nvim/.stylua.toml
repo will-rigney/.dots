@@ -7,7 +7,11 @@ quote_style = "AutoPreferSingle"
 # really wide columns for configuration
 column_width = 160
 # closures on single lines
+# might be better setting for this
 collapse_simple_statement = "Always"
 # rarely comes up
 [sort_requires]
 enabled = true
+
+# need the lsp thing that aligns comments in a block
+# very nice for documenting config parameters
