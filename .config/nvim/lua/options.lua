@@ -6,7 +6,8 @@
 -- vim.opt_global: behaves like :setglobal
 -- vim.opt_local: behaves like :setlocal
 
-vim.opt.number = true         -- show line numbers
+
+vim.opt.number = true -- show line numbers
 vim.opt.relativenumber = true -- relative line numbers
 
 -- clipboard
@@ -60,13 +61,18 @@ vim.opt.updatetime = 1000 -- decrease update time for swap files
 vim.opt.hidden = true -- don't save when switching buffers
 vim.opt.confirm = true
 
+-- treesitter doesn't highlight regular terminal colours correctly
 vim.opt.termguicolors = true -- enable true colour support
+-- vim.opt.termguicolors = false -- disable true colour support
+-- todo: why does editing text need true colour support
+
+-- configure diagnostic appearance
 local severity = vim.diagnostic.severity
 
 -- lsp diagnostic display options
 vim.diagnostic.config {
 	signs = {
-		-- always use * sign column
+		-- always use * in sign column
 		text = {
 			[severity.ERROR] = '*',
 			[severity.WARN] = '*',
@@ -74,8 +80,13 @@ vim.diagnostic.config {
 			[severity.HINT] = '*',
 		},
 	},
+	-- sort display by severity
 	severity_sort = true,
 
+	-- to disable:
+	-- virtual_text = false
+
+	-- ideal world we want to show virtual text for full width window and not otherwise
 	virtual_text = {
 		-- virt_text_hide = true,
 		format = function(diagnostic)
@@ -83,13 +94,14 @@ vim.diagnostic.config {
 			for line in diagnostic.message:gmatch '[^\r\n]+' do
 				return line
 			end
-			-- not possible to reach
-			-- todo: should be panic here
+			-- todo: not possible to reach should be panic here, slightly backward sorry
 		end,
-		-- more fun but bit too much maybe
+		-- no prefix icon
 		prefix = '',
 		-- show diagnostic source if more than one in buffer
 		source = 'if_many',
+		-- todo: right_align not working correctly, covers text instead of wrapping or hiding
+		-- virt_text_pos = 'right_align',
 	},
 }
 
