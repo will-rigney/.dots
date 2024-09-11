@@ -4,12 +4,10 @@
 
 -- remember to use :h for help text on any option
 
--- env
-
 -- filetype
+-- todo: unclear whether indent files or lua files should be used for indent
 vim.cmd 'filetype plugin on' -- enables plugin files only
--- vim.cmd 'filetype plugin indent on' -- enables plugin & indent files (probably enabled by default
-
+-- vim.cmd 'filetype plugin indent on' -- enables plugin & indent files
 
 -- disable providers
 vim.g.loaded_node_provider = 0
@@ -34,5 +32,5 @@ require 'keymap'
 vim.cmd 'colorscheme default'
 -- slight edits
 vim.cmd 'highlight WinSeparator guifg=Black'
-vim.cmd 'highlight StatusLine guibg=Black guifg=NvimLightGray3' -- edit colourscheme
-vim.cmd 'highlight StatusLineNC guibg=NvimDarkGray3 guifg=NvimLightGray3' -- edit colourscheme
+vim.cmd 'highlight StatusLine guibg=Black guifg=NvimLightGray3'
+vim.cmd 'highlight StatusLineNC guibg=NvimDarkGray3 guifg=NvimLightGray3'
