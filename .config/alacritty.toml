@@ -25,9 +25,10 @@ y = 1
 [window]
 opacity = 1.0
 decorations_theme_variant = "Dark"
+# perfect cover entire window except for bar in gnome
+decorations = 'None'
 startup_mode = "Maximized"
 dynamic_title = true
-
 
 [window.padding]
 x = 0
