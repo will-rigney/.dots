@@ -50,7 +50,6 @@ return {
 		},
 		show_help = true,
 		show_keys = true,
-		---@type wk.Win.opts
 		win = {
 			-- don't allow the popup to overlap with the cursor
 			no_overlap = true,
