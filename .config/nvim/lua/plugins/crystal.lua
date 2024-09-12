@@ -7,6 +7,7 @@ return {
 	ft = 'crystal',
 	config = function()
 		-- todo: check does this run it twice
+		-- todo: move into lspconfig regular structure
 		-- start lsp with autocmd
 		vim.api.nvim_create_autocmd('FileType', {
 			pattern = 'crystal',

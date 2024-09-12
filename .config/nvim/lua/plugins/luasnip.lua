@@ -1,12 +1,12 @@
 -- luasnip snippet engine
 -- needed to autocomplete function arguments
 
--- snippets not expanding from cmp quite yet
 return {
 	'L3MON4D3/LuaSnip',
-	-- follow latest release.
+	-- lazy (with cmp)
 	lazy = true,
-	version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-	-- install jsregexp (optional!).
+	-- follow latest release.
+	version = 'v2.*',
+	-- install jsregexp (optional)
 	build = 'make install_jsregexp',
 }

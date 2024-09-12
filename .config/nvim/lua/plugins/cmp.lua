@@ -14,12 +14,10 @@ return {
 		'hrsh7th/cmp-cmdline',
 		'hrsh7th/cmp-nvim-lsp',
 		'hrsh7th/cmp-path',
+		'hrsh7th/cmp-nvim-lsp-signature-help',
 		'ray-x/cmp-treesitter',
-		'L3MON4D3/LuaSnip',
-		-- also crates mentioned
-		-- snippet
 		'saadparwaiz1/cmp_luasnip',
-		-- 'nvim-orgmode/orgmode',
+
 	},
 	-- todo: only complete after at least one letter typed
 	-- does 'keys' need to be defined?
@@ -28,22 +26,28 @@ return {
 		local luasnip = require 'luasnip'
 		-- makes more sense to have ft specific sources injected from their own config if possible
 		cmp.setup {
-			-- todo: only one source at a time
+			-- todo: only one source at a time?
+			-- buffer completion sources
 			sources = {
-				-- { name = 'treesitter' }, -- crazy experiment: no way, way too confusing
-				{ name = 'nvim_lsp' }, --, entry_filter = function(entry) return entry.type ~= 'Text' end },
-				{ name = 'luasnip' }, -- see about this one
-				{ name = 'crates' }, -- also only very specific filetypes using this
-				-- { name = 'orgmode' },
+				{ name = 'nvim_lsp' },
+				{ name = 'nvim_lsp_signature_help' },
+				-- todo: is this filter worth revisiting? have configured things individually not to use text completions
+				--, entry_filter = function(entry) return entry.type ~= 'Text' end },
+				{ name = 'luasnip' }, -- todo: not doing much in cmp, only snippet jumping working
 			},
 
-			-- todo: need to always have doc hover open when selecting competions (maybe its just ts)
+			-- view options
+			view = {
+				docs = {
+					auto_open = true,
+				},
+			},
 
 			-- todo: potentially move these mappings for consistency w regular keymap file
 			mapping = {
-				-- always show completion
+				-- mapping to always open completion
 				['<c-space>'] = cmp.mapping(function() cmp.complete() end, { 'i', 's', 'c' }),
-				-- luasnip tab version
+				-- tab to expand or cycle completions
 				['<tab>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_next_item()
@@ -65,31 +69,26 @@ return {
 				end, { 'i', 's', 'c' }),
 				-- bind to open cmp any buffer always
 				-- todo: only confirm complete if item is selected
-				-- todo: expand snippet w luasnip
 				['<enter>'] = cmp.mapping(
 					cmp.mapping.confirm {
 						behavior = cmp.ConfirmBehavior.Insert,
 						select = false,
 					},
-					{ 'i' } -- only insert mode, not command
+					{ 'i', 's', 'c' }
 				),
 			},
 
 			-- enable luasnip to handle snippet expansion for nvim-cmp
 			snippet = {
-				-- expand = function(args) vim.snippet.expand(args.body) end,
 				expand = function(args) luasnip.lsp_expand(args.body) end,
 			},
-			-- snippet = {
-			-- 	-- haven't figured out snippets yet
-			-- 	expand = function(args) require('luasnip').lsp_expand(args.body) end,
-			-- },
 		}
 
 		-- cmp for searching
 		cmp.setup.cmdline('/', {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = {
+				-- fill search from treesitter only for max finding speed
 				{ name = 'treesitter' },
 			},
 		})
@@ -98,9 +97,10 @@ return {
 		cmp.setup.cmdline(':', {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = cmp.config.sources {
-				-- todo: improve cmdline completions if possible, all 'variable'
-				{ name = 'cmdline' },
 				{ name = 'path' },
+				-- annoyingly cmdline source doubles up with path completions, but path works better
+				-- todo: cmdline show correct types for completions, all 'variable'
+				{ name = 'cmdline', options = { treat_trailing_slash = true } },
 			},
 		})
 	end,
