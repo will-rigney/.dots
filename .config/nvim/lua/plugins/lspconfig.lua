@@ -7,12 +7,35 @@
 return {
 	'neovim/nvim-lspconfig',
 	-- only load in lsp configured filetypes (manually enabled)
-	ft = { 'lua', 'python', 'go', 'toml', 'sh', 'c', 'cpp', 'swift', 'typescript', 'json', 'rust' },
+	ft = {
+		'lua',
+		'python',
+		'go',
+		'toml',
+		'sh',
+		'c',
+		'cpp',
+		'swift',
+		'typescript',
+		'kotlin',
+		'json',
+		'rust',
+		'cuda',
+		'proto',
+		'swift',
+		'objective-c',
+		'objective-cpp',
+		'markdown',
+		'crystal' -- not actually configured here, but for LspInfo
+		-- todo: any more files with lsp
+	},
 	cmd = { 'LspInfo' },
 	dependencies = {
+		-- todo: is this the only place schemastore is depended on from?
 		'b0o/SchemaStore.nvim',
-		-- needed for fancy progress message in bottom corner
-		-- i think we also want this for running vscode style 'tasks' in the future
+		-- dependant on cmp shim
+		'hrsh7th/cmp-nvim-lsp',
+		-- fancy progress reporting
 		{
 			'j-hui/fidget.nvim',
 			opts = {
@@ -32,24 +55,26 @@ return {
 				},
 			},
 		},
+		-- todo: would be good to use same interface for task running potentially
 	},
 	config = function()
-		-- todo: should always be using capabilities reported by attached ls
-		-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 		-- lsp config
 		local lspconfig = require 'lspconfig'
 
+		-- need to inject capabilities for proper completions determined by server capabilities
+		-- makes the config here a bit wordy
+		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 		-- reduce log level
 		vim.lsp.set_log_level(vim.log.levels.ERROR)
 
 		-- setup language servers
 		-- lua
-		-- todo: filter lua virtual text to just have the end part without the source
 		lspconfig.lua_ls.setup {
+			capabilities = capabilities,
 			settings = {
 				Lua = {
 					completion = {
-						-- don't return text completions
+						-- don't return workspace text completions
 						workspaceWord = false,
 						showWord = 'Disable',
 					},
@@ -57,51 +82,66 @@ return {
 			},
 			on_init = function(client)
 				local path = client.workspace_folders[1].name
-
-				-- skip if luarc present (ig luals configures itself by this file anyway)
-				-- i think this actually breaks lua ls
+				-- skip if luarc present (luals configures itself by this file anyway)
+				-- todo: fs_stat not found so not sure if this is working correctly
 				if vim.uv.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then return end
-
+				-- extend settings (by default)
 				client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-					-- neovim jit version
+					-- jit version used by neovim
 					runtime = { version = 'LuaJIT' },
-					-- make the server aware of Neovim runtime files
+					-- make the server aware of neovim runtime files
 					workspace = {
 						checkThirdParty = false,
 						-- vim globals in the namespace
 						-- library = { vim.env.VIMRUNTIME },
 						-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
 						library = vim.api.nvim_get_runtime_file('', true),
-						-- can't really tell any difference tbh
+						-- can't really tell any difference tbh, still testing
 					},
 				})
 			end,
 		}
+
 		-- bash
-		lspconfig.bashls.setup {}
+		lspconfig.bashls.setup {
+			capabilities = capabilities,
+		}
+
 		-- python
-		lspconfig.pyright.setup {}
+		lspconfig.pyright.setup {
+			capabilities = capabilities,
+		}
+
 		-- go
 		lspconfig.gopls.setup {
+			capabilities = capabilities,
 			enhanced_hover = true,
 		}
+
 		-- toml
 		-- todo: root not set correctly without .taplo.toml
 		-- todo: possibly conflicts with crates.nvim for Crates.toml files
 		lspconfig.taplo.setup {
+			capabilities = capabilities,
 			single_file_support = true,
 		}
+
 		-- c/cpp
 		-- todo: not sure we need this with clangd extensions plugin
 		lspconfig.clangd.setup {
+			capabilities = capabilities,
 			filetypes = { 'c', 'cpp', 'cuda', 'proto' },
 		}
+
 		-- swift, objective c/cpp
 		lspconfig.sourcekit.setup {
+			capabilities = capabilities,
 			filetypes = { 'swift', 'objective-c', 'objective-cpp' },
 		}
+
 		-- rust
 		lspconfig.rust_analyzer.setup {
+			capabilities = capabilities,
 			settings = {
 				['rust-analyzer'] = {
 					check = {
@@ -111,20 +151,23 @@ return {
 				},
 			},
 		}
+		-- kotlin
+		lspconfig.kotlin_language_server.setup {
+			capabilities = capabilities,
+			single_file_support = true
+		}
 		-- marksman (markdown)
 		-- requires manual server installation
 		-- todo: this isn't working if it can't detect root?
 		lspconfig.marksman.setup {
+			capabilities = capabilities,
 			single_file_support = true,
 		}
+
 		-- web
 		-- vscode ls
 		lspconfig.jsonls.setup {
-			-- server_capabilities = {
-			-- 	-- using biome for format instead
-			-- 	-- conform i think is configured separately anyway as well
-			-- 	documentFormattingProvider = false,
-			-- },
+			capabilities = capabilities,
 			settings = {
 				json = {
 					-- validate schemas very nice
@@ -134,10 +177,12 @@ return {
 				},
 			},
 		}
+		-- todo: tailwind server
+
+		-- not pictured: crystalline, configured in crystal.lua plugin file
+
 		-- todo: .h currently recognised as cpp headers not c (might be fixed with compile_commands.json)
 
-		-- todo: crystalline also requires manual installation
-		-- tailwind server would be nice, have to install manually
-		-- vscode extracted I think is here already
+		-- todo: move crystalline config into the regular lspconfig to get reporing from LspInfo command configured servers list
 	end,
 }

@@ -29,8 +29,6 @@ return {
 						},
 					},
 					preview = {
-						-- no fill character for binary files
-						-- todo: could use decor actually
 						msg_bg_fillchar = ' ',
 					},
 					border = true,
