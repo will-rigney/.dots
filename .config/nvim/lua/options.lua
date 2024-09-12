@@ -6,9 +6,6 @@
 -- vim.opt_global: behaves like :setglobal
 -- vim.opt_local: behaves like :setlocal
 
--- deactivate non-treesitter syntax highlighting (harsh but fair)
-vim.cmd 'syntax off'
-
 vim.opt.number = true -- show line numbers
 vim.opt.relativenumber = true -- relative line numbers
 

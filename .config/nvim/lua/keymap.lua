@@ -12,7 +12,7 @@
 
 local set = vim.keymap.set
 
---- which-key 
+--- which-key
 local wk = require 'which-key'
 -- groups
 set('n', '<leader>?', function() wk.show { global = true } end, { desc = 'show buffer local keymaps' })
@@ -85,7 +85,7 @@ set('n', '<leader>R', ':w !', { desc = 'run program on buffer contents' })
 -- clear search highlights with escape
 set('n', '<Esc>', '<cmd>nohlsearch<cr>', { desc = 'clear search highlight' })
 
--- main navigation keys (bit experimental, todo: hydra mode) 
+-- main navigation keys (bit experimental, todo: hydra mode)
 set('n', '<leader>h', '<cmd>tabprevious<cr>')
 set('n', '<leader>l', '<cmd>tabnext<cr>')
 set('n', '<leader>j', '<cmd>bprevious<cr>')
@@ -109,7 +109,7 @@ set('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = '[p]revious' })
 set('n', '<leader>tc', '<cmd>tabnew<cr>', { desc = '[c]reate' })
 
 -- oil vinegar bind
-set('n', '-', function () require('oil').open() end, { desc = 'open parent directory' })
+set('n', '-', function() require('oil').open() end, { desc = 'open parent directory' })
 
 -- todo: either don't have these binds if no lsp or replace with treesitter equivalents
 -- mystic g
@@ -125,18 +125,15 @@ set('n', 'K', vim.lsp.buf.hover, { desc = 'hover lsp documentation' })
 set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[c]ode [a]ction' })
 set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[r]ename' })
 set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'show [d]iagnostic' })
-
--- todo: trigger lazy load too? or map only on lsp load (seems confusing)
 set('n', '<leader>cL', '<cmd>LspInfo<cr>', { desc = '[L]SP info' })
 
--- todo: definitely change to lazy spec (instead of commands)
 -- todo: change this to picker if compilation option not currently picked
 set('n', '<leader>cc', '<cmd>CompilerRedo<cr>', { desc = 'redo [c]ompile', silent = true })
 set('n', '<leader>cC', '<cmd>CompilerOpen<cr>', { desc = 'choose [C]ompile option' })
--- todo: remove this binding replace with autoclosing on successful compile
 set('n', '<leader>cR', '<cmd>CompilerToggleResults<cr>', { desc = 'toggle compiler [R]esults' })
--- todo: maybe use different system than compiler.nvim plugin - just?
 
+-- todo: remove this binding replace with autoclosing on successful compile
+-- maybe use different system than compiler.nvim plugin - just?
 set({ 'n', 'v' }, '<leader>cf', function() require('conform').format() end, { desc = '[f]ormat' })
 
 -- telescope builtin mappings
@@ -196,23 +193,23 @@ set('n', '<leader>dn', function() require('dap').continue() end, { desc = '[n]ew
 
 --- git
 -- navigation
-set('n', ']h', function() require'gitsigns'.nav_hunk 'next' end, { desc = 'next hunk' })
-set('n', '[h', function() require'gitsigns'.nav_hunk 'prev' end, { desc = 'previous hunk' })
+set('n', ']h', function() require('gitsigns').nav_hunk 'next' end, { desc = 'next hunk' })
+set('n', '[h', function() require('gitsigns').nav_hunk 'prev' end, { desc = 'previous hunk' })
 -- text object
-set({ 'o', 'x' }, 'ih', function () require'gitsigns'.select_hunk() end, { desc = 'inner hunk' })
+set({ 'o', 'x' }, 'ih', function() require('gitsigns').select_hunk() end, { desc = 'inner hunk' })
 -- diff
-set('n', '<leader>gd', function () require'gitsigns'.preview_hunk() end, { desc = '[d]iff hunk' })
+set('n', '<leader>gd', function() require('gitsigns').preview_hunk() end, { desc = '[d]iff hunk' })
 -- blame
-set('n', '<leader>gb', function () require'gitsigns'.toggle_current_line_blame() end, { desc = '[b]lame' })
+set('n', '<leader>gb', function() require('gitsigns').toggle_current_line_blame() end, { desc = '[b]lame' })
 -- stage
-set('n', '<leader>gs', function () require'gitsigns'.stage_hunk() end, { desc = '[s]tage hunk' })
-set('v', '<leader>gs', function() require'gitsigns'.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[s]tage visual selection' })
-set('n', '<leader>gS', function() require'gitsigns'.stage_buffer() end, { desc = '[S]tage buffer' })
+set('n', '<leader>gs', function() require('gitsigns').stage_hunk() end, { desc = '[s]tage hunk' })
+set('v', '<leader>gs', function() require('gitsigns').stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[s]tage visual selection' })
+set('n', '<leader>gS', function() require('gitsigns').stage_buffer() end, { desc = '[S]tage buffer' })
 -- unstage
-set('n', '<leader>gu', function () require'gitsigns'.undo_stage_hunk() end, { desc = '[u]nstage hunk' })
-set('v', '<leader>gu', function() require'gitsigns'.undo_stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[u]nstage visual selection' })
+set('n', '<leader>gu', function() require('gitsigns').undo_stage_hunk() end, { desc = '[u]nstage hunk' })
+set('v', '<leader>gu', function() require('gitsigns').undo_stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[u]nstage visual selection' })
 -- reset
-set('n', '<leader>gr', function () require'gitsigns'.reset_hunk() end, { desc = '[r]eset hunk' })
-set('v', '<leader>gr', function() require'gitsigns'.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[r]eset visual selection' })
-set('n', '<leader>gR', function () require'gitsigns'.reset_buffer() end, { desc = '[R]eset buffer' })
-set('n', '<leader>gt', function () require'gitsigns'.toggle_signs() end, { desc = '[t]oggle signs' })
+set('n', '<leader>gr', function() require('gitsigns').reset_hunk() end, { desc = '[r]eset hunk' })
+set('v', '<leader>gr', function() require('gitsigns').reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[r]eset visual selection' })
+set('n', '<leader>gR', function() require('gitsigns').reset_buffer() end, { desc = '[R]eset buffer' })
+set('n', '<leader>gt', function() require('gitsigns').toggle_signs() end, { desc = '[t]oggle signs' })
