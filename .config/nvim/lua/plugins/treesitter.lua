@@ -13,6 +13,7 @@ return {
 			ensure_installed = {
 				-- norg meta?
 				'asm',
+				'astro',
 				'bash',
 				'c',
 				'cmake',
