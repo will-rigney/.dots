@@ -16,16 +16,18 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 -- :checkhealth to confirm
 
--- map leader
+-- map space as leader
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- comma as local leader
+vim.g.maplocalleader = ','
 
 --- modules
-require 'options'
-require 'statusline'
 require 'lazyinit'
-require 'autocmd'
+require 'options'
+require 'diagnostics'
+require 'statusline'
 require 'keymap'
+require 'autocmd'
 
 -- color scheme
 -- default is best rn
@@ -34,3 +36,17 @@ vim.cmd 'colorscheme default'
 vim.cmd 'highlight WinSeparator guifg=Black'
 vim.cmd 'highlight StatusLine guibg=Black guifg=NvimLightGray3'
 vim.cmd 'highlight StatusLineNC guibg=NvimDarkGray3 guifg=NvimLightGray3'
+
+-- this breaks fidget / transparancy effects
+vim.cmd 'highlight Normal guibg=181818' -- match alacritty default bg
+
+-- previous buggy terminal colour change 
+-- vim.cmd [[set winhl=Normal:NormalFloat]]
+
+-- disable regex syntax highlighting (harsh but fair)
+vim.cmd 'syntax off'
+
+-- use native treesitter folding
+-- todo: when to fold
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

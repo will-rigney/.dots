@@ -17,22 +17,25 @@ local wk = require 'which-key'
 -- groups
 set('n', '<leader>?', function() wk.show { global = true } end, { desc = 'show buffer local keymaps' })
 wk.add {
+	{ '<leader>', group = '+leader' },
 	{ '<leader>b', group = '+[b]uffer' },
 	{ '<leader>c', group = '+[c]ode' },
 	{ '<leader>d', group = '+[d]ebug' },
 	{ '<leader>f', group = '+[f]ind' },
 	{ '<leader>r', group = '+[r]eload' },
 	{ '<leader>t', group = '+[t]ab' },
-	{ '<leader>', group = '+leader' },
 	{ '<leader>g', group = '+[g]it' },
+	{ '<leader>w', group = '+[w]indow' },
 	{ '[', group = '+jump previous' },
 	{ ']', group = '+jump next' },
 	{ 'g', group = '+mystic g' },
 	{ 'z', group = '+folds+scrolls' },
-	{ ';', desc = 'jump to next f/t-result.' },
+	{ ';', desc = 'jump to next f/t-result' },
 	{ '<c-i>', desc = 'into the jumplist' },
 	{ '<c-o>', desc = 'out of the jumplist' },
 }
+
+-- todo: worlds useful bind for markdown [[, ]] not in which key
 
 set('n', '<leader>i', '<c-i>', { desc = 'into the jumplist' })
 set('n', '<leader>o', '<c-o>', { desc = 'out of the jumplist' })
@@ -44,7 +47,6 @@ set('n', '<leader>o', '<c-o>', { desc = 'out of the jumplist' })
 -- todo: more wincmd e.g. H, J, K, L
 set('n', '<leader>w', '<C-w>')
 wk.add {
-	{ '<leader>w', group = 'window' },
 	{ '<leader>w+', desc = 'increase height' },
 	{ '<leader>w-', desc = 'decrease height' },
 	{ '<leader>w<', desc = 'decrease width' },
