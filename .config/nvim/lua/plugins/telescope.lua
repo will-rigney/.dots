@@ -29,7 +29,8 @@ return {
 						},
 					},
 					preview = {
-						msg_bg_fillchar = ' ',
+						-- fill binary files with decoratively tiling string
+						msg_bg_fillchar = require('decor').get_tile(),
 					},
 					border = true,
 					-- empty borderchars to disable border without leaving gap
