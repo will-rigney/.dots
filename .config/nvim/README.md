@@ -88,6 +88,7 @@ many more todos littered in files, please grep at your pleasure
 
 ### todo list
 
+- [ ] make the telescope builtin keybinds more obvious for which-key
 - [ ] pin working versions of all plugins
 - [ ] editor_config support
 - [ ] telescope.builtin open man page in terminal buffer

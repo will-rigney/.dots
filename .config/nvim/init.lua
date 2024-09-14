@@ -45,8 +45,3 @@ vim.cmd 'highlight Normal guibg=181818' -- match alacritty default bg
 
 -- disable regex syntax highlighting (harsh but fair)
 vim.cmd 'syntax off'
-
--- use native treesitter folding
--- todo: when to fold
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
