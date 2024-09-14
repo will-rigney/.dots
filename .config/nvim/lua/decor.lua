@@ -1,10 +1,11 @@
--- save as face.lua but for some nice random decoration
--- used for statusbar
 -- provides little text decoration strings
--- get_face() returns a face as a string, get_decoration
+
+-- get_decoration() returns a little decorative string
+-- get_face() returns a decorative face
+-- get_ tile() returns a tiling decorative string
 
 -- private list of all the decorations
-local decor = {
+local decorations = {
 	'	˚₊· ͟͟͞͞➳❥',
 	'✧･ﾟ: *✧･ﾟ:*',
 	'*:･ﾟ✧*:･ﾟ✧',
@@ -228,15 +229,26 @@ local faces = {
 	'(๑>◡<๑)',
 }
 
+local tiles = {
+	-- space always on the left as it looks more even
+	'‿ ⁀ ',
+	'ᐯᐯᐯ',
+	' ⁄ ⁄ ⁄',
+	' ☆',
+	' *',
+	' ✧',
+	' ❤',
+	'⋆୨୧˚',
+}
+
+-- pick something random from input and return
+local function get_random_decoration(decor_list)
+	local random_index = math.random(#decor_list)
+	return decor_list[random_index]
+end
+
 return {
-	-- get some random decoration
-	get_decoration = function()
-		local random_index = math.random(#decor)
-		return decor[random_index]
-	end,
-	-- get a random face
-	get_face = function()
-		local random_index = math.random(#faces)
-		return faces[random_index]
-	end,
+	get_decoration = function() return get_random_decoration(decorations) end,
+	get_face = function() return get_random_decoration(faces) end,
+	get_tile = function() return get_random_decoration(tiles) end,
 }
