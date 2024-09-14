@@ -3,4 +3,4 @@
 
 -- no treesitter parsing for crystal, using vimcrystal extension instead
 -- todo: this should be buffer local for crystal right
-win.cmd 'syntax on'
+vim.cmd.syntax 'on'
