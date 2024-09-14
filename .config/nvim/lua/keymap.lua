@@ -67,15 +67,18 @@ wk.add {
 	{ '<leader>w|', desc = 'max out the width' },
 }
 
+-- todo: nvim version
+set('n', '<leader>wd', '<cmd>close<cr>', { desc = '[d]elete' })
+
 -- add Z options
--- wk.add {
--- 	{ 'Z', group = '+quit' },
+wk.add {
+	{ 'Z', group = '+quit' },
 	-- overridden currently:
-	-- { 'ZZ', desc = 'save and quit buffer' },
-	-- { 'ZQ', desc = 'quit buffer without saving' },
--- }
+	{ 'ZZ', desc = 'save and quit buffer' },
+	{ 'ZQ', desc = 'quit buffer without saving' },
+}
 -- forget those other Z binds
-set('n', 'Z', '<cmd>write<cr>', { desc = 'write buffer' })
+-- set('n', 'Z', '<cmd>write<cr>', { desc = 'write buffer' })
 
 -- remove default <C-W> diagnostic bindings
 set('n', '<C-W>d', '')
@@ -96,11 +99,19 @@ set('n', '<leader>k', '<cmd>bnext<cr>')
 -- buffer
 -- todo: I don't want this to delete the window normally, just go to a different open buffer and delete the current one
 -- should be like bprevious but the open buffer is removed from buffer list
-set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = '[d]elete' })
-set('n', '<leader>bk', '<cmd>bdelete!<cr>', { desc = '[k]ill (warning: save first)' })
+-- set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = '[d]elete' })
+
+-- delete buffer without closing window
+-- now to fix every other place window is closed from contents closing
+set('n', '<leader>bd', '<cmd>bp|bd #<cr>', { desc = '[d]elete' })
+set('n', '<leader>bc', '<cmd>enew<cr>', { desc = '[c]reate' })
 set('n', '<leader>bn', '<cmd>bnext<cr>', { desc = '[n]ext' })
 set('n', '<leader>bp', '<cmd>bprevious<cr>', { desc = '[p]revious' })
-set('n', '<leader>bc', '<cmd>enew<cr>', { desc = '[c]reate' })
+-- duplicate with h & l (maybe jk too just to be extra wild)
+set('n', '<leader>bl', '<cmd>bnext<cr>', { desc = '[n]ext' })
+set('n', '<leader>bh', '<cmd>bprevious<cr>', { desc = '[p]revious' })
+-- should be much more difficult to press accidentally, rarely need to use
+-- set('n', '<leader>bk', '<cmd>bdelete!<cr>', { desc = '[k]ill (warning: save first)' })
 
 -- tab
 set('n', '<leader>th', '<cmd>tabprevious<cr>')
@@ -115,6 +126,8 @@ set('n', '-', function() require('oil').open() end, { desc = 'open parent direct
 
 -- todo: either don't have these binds if no lsp or replace with treesitter equivalents
 -- mystic g
+-- todo: this is sometimes not as good as <c-]> follow tag, might be way to all in one with treesitter gtd for best results
+-- see: https://github.com/hrsh7th/nvim-gtd
 set('n', 'gd', vim.lsp.buf.definition, { desc = '[g]o to [d]efinition' })
 set('n', 'gD', vim.lsp.buf.declaration, { desc = '[g]o to [D]eclaration' })
 set('n', 'gT', vim.lsp.buf.type_definition, { buffer = 0, desc = '[g]o to [T]ype definition' }) -- why is buffer needed?
@@ -128,6 +141,7 @@ set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[c]ode [a]ction' })
 set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[r]ename' })
 set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'show [d]iagnostic' })
 set('n', '<leader>cL', '<cmd>LspInfo<cr>', { desc = '[L]SP info' })
+set('n', '<leader>cs', vim.lsp.buf.signature_help, { desc = '[s]ignature help' })
 
 -- todo: change this to picker if compilation option not currently picked
 set('n', '<leader>cc', '<cmd>CompilerRedo<cr>', { desc = 'redo [c]ompile', silent = true })
@@ -145,11 +159,11 @@ set('n', '<leader>/', function() require('telescope.builtin').current_buffer_fuz
 set('n', '<leader>:', function() require('telescope.builtin').commands() end, { desc = 'fuzzy run command' })
 set('n', '<leader>C', function() require('telescope.builtin').colorscheme { enable_preview = true } end, { desc = '[C]olour schemes' })
 --- find
+set('n', '<leader>f/', function() require('telescope.builtin').live_grep() end, { desc = 'ripgrep' })
 set('n', '<leader>ff', function() require('telescope.builtin').fd() end, { desc = '[f]ile' })
-set('n', '<leader>fF', function() require('telescope.builtin').find_files { hidden = true } end, { desc = 'hidden [F]ile' })
+set('n', '<leader>fF', function() require('telescope.builtin').fd { hidden = true } end, { desc = 'hidden [F]ile' })
 set('n', '<leader>fr', function() require('telescope.builtin').oldfiles() end, { desc = '[r]ecent files' })
 -- todo: would be cool to have tree sitter completions here
-set('n', '<leader>fg', function() require('telescope.builtin').live_grep() end, { desc = '[g]rep' })
 set('n', '<leader>ft', function() require('telescope.builtin').treesitter() end, { desc = '[t]reesitter' })
 set('n', '<leader>fb', function() require('telescope.builtin').buffers() end, { desc = '[b]uffer' })
 set('n', '<leader>fh', function() require('telescope.builtin').help_tags() end, { desc = '[h]elp' })
@@ -159,7 +173,7 @@ set('n', '<leader>fm', function() require('telescope.builtin').man_pages() end, 
 set('n', '<leader>fc', function() require('telescope.builtin').git_bcommits() end, { desc = 'buffer [c]ommits' })
 set('n', '<leader>fC', function() require('telescope.builtin').git_commits() end, { desc = 'directory [C]ommits' })
 set('n', '<leader>fD', function() require('telescope.builtin').git_status() end, { desc = 'git [D]iff' }) -- maybe different bind... -- very powerful for searching diffs
-set('n', '<leader>fG', function() require('telescope.builtin').git_files() end, { desc = '[G]it files' })
+set('n', '<leader>fg', function() require('telescope.builtin').git_files() end, { desc = '[g]it files' })
 -- find with lsp
 set('n', '<leader>fs', function() require('telescope.builtin').lsp_document_symbols() end, { desc = 'document [s]ymbols' })
 set('n', '<leader>fS', function() require('telescope.builtin').lsp_workspace_symbols() end, { desc = 'workspace [S]ymbols' }) -- weirdly only has types, at least in rust-analyzer
@@ -195,8 +209,8 @@ set('n', '<leader>dn', function() require('dap').continue() end, { desc = '[n]ew
 
 --- git
 -- navigation
-set('n', ']h', function() require('gitsigns').nav_hunk 'next' end, { desc = 'next hunk' })
-set('n', '[h', function() require('gitsigns').nav_hunk 'prev' end, { desc = 'previous hunk' })
+set('n', ']g', function() require('gitsigns').nav_hunk 'next' end, { desc = 'next git hunk' })
+set('n', '[g', function() require('gitsigns').nav_hunk 'prev' end, { desc = 'previous git hunk' })
 -- text object
 set({ 'o', 'x' }, 'ih', function() require('gitsigns').select_hunk() end, { desc = 'inner hunk' })
 -- diff
