@@ -31,8 +31,9 @@ vim.opt.softtabstop = 0 -- disable soft tab stop
 vim.opt.shiftwidth = 4 -- shift same as tab width
 
 -- scroll
-vim.opt.scrolloff = 8 -- scroll 8 lines from bottom
-vim.opt.sidescrolloff = 8 -- scroll 8 columns from right
+vim.opt.scrolloff = 2
+vim.opt.sidescrolloff = 12
+-- see also: neoscroll plugin
 
 -- completion
 vim.opt.wildmode = { 'list', 'longest' } -- list matches until longest common string
@@ -48,12 +49,12 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt_global.showcmd = false -- don't show key just pressed (flashing hjkl in bottom corner)
 
--- vim.opt.colorcolumn = '80' -- superior 80 column marker
--- todo: override column marker per filetype, keybind to toggle
+-- vim.opt.colorcolumn = '80' -- superior 80 column marker (not enabled)
+-- todo: override per filetype, keybind to toggle
 
 -- wrap
 vim.opt.linebreak = true -- break on word boundary, see breakat string
-vim.opt.wrap = false -- disable wrapping
+vim.opt.wrap = false -- disable wrapping (override per ft)
 
 -- saving
 vim.opt.updatetime = 1000 -- decrease update time for swap files
@@ -66,4 +67,11 @@ vim.opt.termguicolors = true -- enable true colour support
 -- todo: why does editing text need true colour support
 
 -- disable neovide cursor animations:
--- vim.g.neovide_cursor_animation_length = 0
+vim.g.neovide_cursor_animation_length = 0
+
+-- netrw (not in use)
+vim.g.netrw_banner = 0								-- hide banner
+vim.g.netrw_liststyle = 3							-- use tree display
+vim.g.netrw_browse_split = 0 						-- open in current split
+vim.g.netrw_altv = 1								-- todo
+vim.g.netrw_preview = 1  							-- vertical preview
