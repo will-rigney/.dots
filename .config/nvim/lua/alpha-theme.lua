@@ -1,12 +1,11 @@
-local utils = require 'alpha.utils'
+-----------------
+-- alpha theme --
+-----------------
 
 -- only want to open for empty buffer
 
+-- todo: where is this used? & why
 local if_nil = vim.F.if_nil
-local fnamemodify = vim.fn.fnamemodify
-local filereadable = vim.fn.filereadable
-
--- todo: add some cowsay goodness
 
 local default_header = {
 	type = 'text',
@@ -41,19 +40,21 @@ local default_header = {
 	opts = {
 		hl = 'Type',
 		shrink_margin = false,
-		wrap = 'overflow', -- not sure
 	},
 }
 
 local leader = '<leader>'
+
+-- todo: should take same type for keybind as actual keymap function does
 
 --- @param sc string
 --- @param txt string
 --- @param keybind string? optional
 --- @param keybind_opts table? optional
 local function button(sc, txt, keybind, keybind_opts)
+	--
 	local sc_ = sc:gsub('%s', ''):gsub(leader, '<leader>')
-
+	-- button display opts
 	local opts = {
 		position = 'left',
 		shortcut = '[' .. sc .. '] ',
@@ -63,16 +64,20 @@ local function button(sc, txt, keybind, keybind_opts)
 		hl_shortcut = { { 'Operator', 0, 1 }, { 'Number', 1, #sc + 1 }, { 'Operator', #sc + 1, #sc + 2 } },
 		shrink_margin = false,
 	}
+	-- add the keybind if one passed
 	if keybind then
 		keybind_opts = if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
 		opts.keymap = { 'n', sc_, keybind, keybind_opts }
 	end
 
+	-- on press key code
 	local function on_press()
 		local key = vim.api.nvim_replace_termcodes(keybind .. '<Ignore>', true, false, true)
 		vim.api.nvim_feedkeys(key, 't', false)
 	end
 
+	-- returns a little button structure with passed values
+	-- this is the actual member of the layout tree
 	return {
 		type = 'button',
 		val = txt,
@@ -110,6 +115,8 @@ local section = {
 }
 
 local config = {
+	-- layout is odd to have member of config
+	-- and refer to each part individually
 	layout = {
 		{ type = 'padding', val = 1 },
 		section.header,
@@ -122,8 +129,6 @@ local config = {
 	opts = {
 		margin = 3,
 		redraw_on_resize = false,
-		-- setup = function()
-		-- end,
 	},
 }
 
