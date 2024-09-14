@@ -2,8 +2,6 @@
 -- community sourced configs for lsp integrations
 -- https://github.com/neovim/nvim-lspconfig
 
--- todo: get rid of little square icons in diagnostic virtual text for rust
-
 return {
 	'neovim/nvim-lspconfig',
 	-- only load in lsp configured filetypes (manually enabled)
@@ -154,8 +152,9 @@ return {
 		-- kotlin
 		lspconfig.kotlin_language_server.setup {
 			capabilities = capabilities,
-			single_file_support = true
+			single_file_support = true,
 		}
+
 		-- marksman (markdown)
 		-- requires manual server installation
 		-- todo: this isn't working if it can't detect root?
@@ -177,11 +176,10 @@ return {
 				},
 			},
 		}
+		-- todo: .h currently recognised as cpp headers not c (might be fixed with compile_commands.json)
 		-- todo: tailwind server
 
 		-- not pictured: crystalline, configured in crystal.lua plugin file
-
-		-- todo: .h currently recognised as cpp headers not c (might be fixed with compile_commands.json)
 
 		-- todo: move crystalline config into the regular lspconfig to get reporing from LspInfo command configured servers list
 	end,
