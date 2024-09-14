@@ -2,28 +2,32 @@
 -- unified completions
 -- https://github.com/hrsh7th/nvim-cmp
 
+-- can add sources to cmp after the fact using table.insert
+-- see conjure config for more info
+
 return {
 	'hrsh7th/nvim-cmp',
 	lazy = true,
-	-- also command mode & search
+	-- insert mode, command mode & search (todo: make sure this is true)
 	event = { 'InsertEnter', 'CmdlineEnter' },
 	-- note that for e.g. man buffers we could never have to load cmp if this loaded lazy
 	priority = 100,
 	dependencies = {
 		-- 'hrsh7th/cmp-buffer',
 		'hrsh7th/cmp-cmdline',
-		'hrsh7th/cmp-nvim-lsp',
 		'hrsh7th/cmp-path',
-		'hrsh7th/cmp-nvim-lsp-signature-help',
 		'ray-x/cmp-treesitter',
 		'saadparwaiz1/cmp_luasnip',
-
+		-- todo: probably only on lsp attach, doesn't matter much
+		'hrsh7th/cmp-nvim-lsp',
+		'hrsh7th/cmp-nvim-lsp-signature-help',
 	},
 	-- todo: only complete after at least one letter typed
 	-- does 'keys' need to be defined?
 	config = function()
 		local cmp = require 'cmp'
 		local luasnip = require 'luasnip'
+
 		-- makes more sense to have ft specific sources injected from their own config if possible
 		cmp.setup {
 			-- todo: only one source at a time?
@@ -31,9 +35,13 @@ return {
 			sources = {
 				{ name = 'nvim_lsp' },
 				{ name = 'nvim_lsp_signature_help' },
-				-- todo: is this filter worth revisiting? have configured things individually not to use text completions
-				--, entry_filter = function(entry) return entry.type ~= 'Text' end },
-				{ name = 'luasnip' }, -- todo: not doing much in cmp, only snippet jumping working
+				{ name = 'luasnip' },
+				-- todo: not doing much in cmp, only snippet jumping working
+			},
+
+			-- completion settings
+			completion = {
+				keyword_length = 0, -- always autocompleting
 			},
 
 			-- view options
@@ -61,6 +69,7 @@ return {
 					if cmp.visible() then
 						cmp.select_prev_item()
 					-- reverse direction?
+					-- see: vim.snippet.jump()
 					elseif luasnip.jumpable(-1) then
 						luasnip.jump(-1)
 					else
@@ -81,6 +90,7 @@ return {
 			-- enable luasnip to handle snippet expansion for nvim-cmp
 			snippet = {
 				expand = function(args) luasnip.lsp_expand(args.body) end,
+				-- expand = function(args) vim.snippet.expand(args.body) end,
 			},
 		}
 
