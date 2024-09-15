@@ -62,6 +62,7 @@ return {
 		-- need to inject capabilities for proper completions determined by server capabilities
 		-- makes the config here a bit wordy
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 		-- reduce log level
 		vim.lsp.set_log_level(vim.log.levels.ERROR)
 
