@@ -150,6 +150,7 @@ return {
 				},
 			},
 		}
+
 		-- kotlin
 		lspconfig.kotlin_language_server.setup {
 			capabilities = capabilities,
