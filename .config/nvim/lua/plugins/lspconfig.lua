@@ -24,7 +24,7 @@ return {
 		'objective-c',
 		'objective-cpp',
 		'markdown',
-		'crystal' -- not actually configured here, but for LspInfo
+		'crystal', -- not actually configured here, but for LspInfo
 		-- todo: any more files with lsp
 	},
 	cmd = { 'LspInfo' },

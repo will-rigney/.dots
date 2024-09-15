@@ -5,7 +5,6 @@
 return {
 	'saecki/crates.nvim',
 	event = { 'BufRead Cargo.toml' },
-	-- dependencies = {}, -- todo: include cmp in dependencies
 	opts = {
 		completion = {
 			cmp = {

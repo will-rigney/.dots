@@ -1,7 +1,9 @@
 -- telescope
 -- unified fuzzy finding
-
 -- https://github.com/nvim-telescope/telescope.nvim
+
+-- todo: bindings for e.g. open in new tab, open in split (already exists but unclear)
+-- todo: make which-key in telescope finders more useful
 
 return {
 	{
@@ -15,7 +17,7 @@ return {
 		config = function()
 			local telescope = require 'telescope'
 			telescope.setup {
-				-- want to set max size for prompt side
+				-- defaults (overridden for individual pickers)
 				defaults = {
 					selection_carret = ' ',
 					prompt_prefix = '',

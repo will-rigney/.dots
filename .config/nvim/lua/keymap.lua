@@ -78,7 +78,6 @@ wk.add {
 	{ 'ZQ', desc = 'quit buffer without saving' },
 }
 -- forget those other Z binds
--- set('n', 'Z', '<cmd>write<cr>', { desc = 'write buffer' })
 
 -- remove default <C-W> diagnostic bindings
 set('n', '<C-W>d', '')
@@ -110,8 +109,6 @@ set('n', '<leader>bp', '<cmd>bprevious<cr>', { desc = '[p]revious' })
 -- duplicate with h & l (maybe jk too just to be extra wild)
 set('n', '<leader>bl', '<cmd>bnext<cr>', { desc = '[n]ext' })
 set('n', '<leader>bh', '<cmd>bprevious<cr>', { desc = '[p]revious' })
--- should be much more difficult to press accidentally, rarely need to use
--- set('n', '<leader>bk', '<cmd>bdelete!<cr>', { desc = '[k]ill (warning: save first)' })
 
 -- tab
 set('n', '<leader>th', '<cmd>tabprevious<cr>')
@@ -148,8 +145,6 @@ set('n', '<leader>cc', '<cmd>CompilerRedo<cr>', { desc = 'redo [c]ompile', silen
 set('n', '<leader>cC', '<cmd>CompilerOpen<cr>', { desc = 'choose [C]ompile option' })
 set('n', '<leader>cR', '<cmd>CompilerToggleResults<cr>', { desc = 'toggle compiler [R]esults' })
 
--- todo: remove this binding replace with autoclosing on successful compile
--- maybe use different system than compiler.nvim plugin - just?
 set({ 'n', 'v' }, '<leader>cf', function() require('conform').format() end, { desc = '[f]ormat' })
 
 -- telescope builtin mappings
