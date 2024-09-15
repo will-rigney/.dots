@@ -39,6 +39,7 @@ vim.cmd 'highlight StatusLineNC guibg=NvimDarkGray3 guifg=NvimLightGray3'
 
 -- this breaks fidget / transparancy effects
 vim.cmd 'highlight Normal guibg=181818' -- match alacritty default bg
+vim.cmd 'highlight NormalFloat guibg=181818' -- match alacritty default bg (todo: breaks fidget notifications slightly)
 
 -- previous buggy terminal colour change 
 -- vim.cmd [[set winhl=Normal:NormalFloat]]
