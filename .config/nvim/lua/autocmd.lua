@@ -36,7 +36,7 @@ autocmd('TermOpen', { pattern = '', command = 'startinsert' })
 -- these are all slightly different events, see `:h events` for more information
 -- autocmd('WinEnter', { pattern = 'term://*', command = 'startinsert' })
 -- autocmd('BufEnter', { pattern = 'term://*', command = 'startinsert' })
-autocmd('BufWinEnter', { pattern = 'term://*', command = 'startinsert' })
+-- autocmd('BufWinEnter', { pattern = 'term://*', command = 'startinsert' })
 
 -- auto close after teminal command complete, skip return value
 autocmd('TermClose', { pattern = 'term://*', callback = function() vim.api.nvim_input '<cr>' end })
