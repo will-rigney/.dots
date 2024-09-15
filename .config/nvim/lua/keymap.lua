@@ -15,7 +15,7 @@ local set = vim.keymap.set
 --- which-key
 local wk = require 'which-key'
 -- groups
-set('n', '<leader>?', function() wk.show { global = true } end, { desc = 'show buffer local keymaps' })
+set('n', '<leader>?', function() wk.show { global = true } end, { desc = 'show keymaps' })
 wk.add {
 	{ '<leader>', group = '+leader' },
 	{ '<leader>b', group = '+[b]uffer' },
