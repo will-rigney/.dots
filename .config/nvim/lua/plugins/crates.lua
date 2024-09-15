@@ -5,6 +5,9 @@
 return {
 	'saecki/crates.nvim',
 	event = { 'BufRead Cargo.toml' },
+	dependencies = {
+		'hrsh7th/nvim-cmp',
+	},
 	opts = {
 		completion = {
 			cmp = {
