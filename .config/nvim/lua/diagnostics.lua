@@ -18,16 +18,17 @@ vim.diagnostic.config {
 	severity_sort = true,
 
 	-- underline
-	underline = false,
-	-- underline = {
-	-- 	-- only underline errors (less obtrusive)
-	-- 	severity = severity.ERROR
-	-- },
+	-- underline = false,
+	underline = {
+		-- only underline errors (less obtrusive)
+		severity = severity.ERROR
+	},
 	-- to disable:
 	-- virtual_text = false
 
 	-- ideal world we want to show virtual text for full width window and not otherwise
 	virtual_text = {
+		severity = severity.ERROR,
 		-- virt_text_hide = true,
 		-- filter text
 		format = function(diagnostic)
