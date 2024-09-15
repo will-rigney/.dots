@@ -242,10 +242,7 @@ local tiles = {
 }
 
 -- pick something random from input and return
-local function get_random_decoration(decor_list)
-	local random_index = math.random(#decor_list)
-	return decor_list[random_index]
-end
+local function get_random_decoration(decor_list) return decor_list[math.random(#decor_list)] end
 
 return {
 	get_decoration = function() return get_random_decoration(decorations) end,
