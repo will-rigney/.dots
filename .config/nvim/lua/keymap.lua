@@ -71,13 +71,7 @@ wk.add {
 set('n', '<leader>wd', '<cmd>close<cr>', { desc = '[d]elete' })
 
 -- add Z options
-wk.add {
-	{ 'Z', group = '+quit' },
-	-- overridden currently:
-	{ 'ZZ', desc = 'save and quit buffer' },
-	{ 'ZQ', desc = 'quit buffer without saving' },
-}
--- forget those other Z binds
+set('n', 'Z', '<cmd>write<cr>', { desc = 'write buffer' }) -- forget those other Z binds
 
 -- remove default <C-W> diagnostic bindings
 set('n', '<C-W>d', '')
@@ -101,12 +95,12 @@ set('n', '<leader>k', '<cmd>bnext<cr>')
 -- set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = '[d]elete' })
 
 -- delete buffer without closing window
--- now to fix every other place window is closed from contents closing
 set('n', '<leader>bd', '<cmd>bp|bd #<cr>', { desc = '[d]elete' })
+-- good job, now to fix every other place window is closed from contents closing
 set('n', '<leader>bc', '<cmd>enew<cr>', { desc = '[c]reate' })
 set('n', '<leader>bn', '<cmd>bnext<cr>', { desc = '[n]ext' })
 set('n', '<leader>bp', '<cmd>bprevious<cr>', { desc = '[p]revious' })
--- duplicate with h & l (maybe jk too just to be extra wild)
+-- duplicate with h & l 
 set('n', '<leader>bl', '<cmd>bnext<cr>', { desc = '[n]ext' })
 set('n', '<leader>bh', '<cmd>bprevious<cr>', { desc = '[p]revious' })
 
@@ -123,28 +117,27 @@ set('n', '-', function() require('oil').open() end, { desc = 'open parent direct
 
 -- todo: either don't have these binds if no lsp or replace with treesitter equivalents
 -- mystic g
--- todo: this is sometimes not as good as <c-]> follow tag, might be way to all in one with treesitter gtd for best results
--- see: https://github.com/hrsh7th/nvim-gtd
 set('n', 'gd', vim.lsp.buf.definition, { desc = '[g]o to [d]efinition' })
 set('n', 'gD', vim.lsp.buf.declaration, { desc = '[g]o to [D]eclaration' })
 set('n', 'gT', vim.lsp.buf.type_definition, { buffer = 0, desc = '[g]o to [T]ype definition' }) -- why is buffer needed?
 set('n', 'gi', vim.lsp.buf.implementation, { desc = '[g]o to [T]ype definition' })
+-- todo: this is sometimes not as good as <c-]> follow tag, might be way to all in one with treesitter gtd for best results
+-- see: https://github.com/hrsh7th/nvim-gtd
+
+-- todo: need to add descriptions for more of the default bindings for g, e.g. gq
 
 --- code
 
 -- todo: scroll hover display & q to close, everything except q closes currently
+-- lsp
 set('n', 'K', vim.lsp.buf.hover, { desc = 'hover lsp documentation' })
 set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[c]ode [a]ction' })
 set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[r]ename' })
 set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'show [d]iagnostic' })
-set('n', '<leader>cL', '<cmd>LspInfo<cr>', { desc = '[L]SP info' })
 set('n', '<leader>cs', vim.lsp.buf.signature_help, { desc = '[s]ignature help' })
+set('n', '<leader>cL', '<cmd>LspInfo<cr>', { desc = '[L]SP info' })
 
--- todo: change this to picker if compilation option not currently picked
-set('n', '<leader>cc', '<cmd>CompilerRedo<cr>', { desc = 'redo [c]ompile', silent = true })
-set('n', '<leader>cC', '<cmd>CompilerOpen<cr>', { desc = 'choose [C]ompile option' })
-set('n', '<leader>cR', '<cmd>CompilerToggleResults<cr>', { desc = 'toggle compiler [R]esults' })
-
+-- conform
 set({ 'n', 'v' }, '<leader>cf', function() require('conform').format() end, { desc = '[f]ormat' })
 
 -- telescope builtin mappings
@@ -224,3 +217,4 @@ set('n', '<leader>gr', function() require('gitsigns').reset_hunk() end, { desc =
 set('v', '<leader>gr', function() require('gitsigns').reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = '[r]eset visual selection' })
 set('n', '<leader>gR', function() require('gitsigns').reset_buffer() end, { desc = '[R]eset buffer' })
 set('n', '<leader>gt', function() require('gitsigns').toggle_signs() end, { desc = '[t]oggle signs' })
+
