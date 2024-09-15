@@ -60,6 +60,9 @@ export PATH="$HOME/dev/kotlin-language-server/server/build/install/server/bin:$P
 # crystalline ls currently using a hardcoded value for binary location in neovim 
 # and not added to path, why not these others? 
 
+# needed for clang as default c compiler
+alias cc='clang'
+
 ## man
 
 # fix bat man formatting issues
