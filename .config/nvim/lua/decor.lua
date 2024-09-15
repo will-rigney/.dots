@@ -235,10 +235,10 @@ local tiles = {
 	'ᐯᐯᐯ',
 	' ⁄ ⁄ ⁄',
 	' ☆',
+	'⋆୨୧˚',
+	' ❤',
 	' *',
 	' ✧',
-	' ❤',
-	'⋆୨୧˚',
 }
 
 -- pick something random from input and return
