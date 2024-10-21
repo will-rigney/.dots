@@ -160,14 +160,15 @@ set('n', '<leader>fm', function() require('telescope.builtin').man_pages() end, 
 -- this will checkout the chosen commit on <cr>
 set('n', '<leader>fc', function() require('telescope.builtin').git_bcommits() end, { desc = 'buffer [c]ommits' })
 set('n', '<leader>fC', function() require('telescope.builtin').git_commits() end, { desc = 'directory [C]ommits' })
-set('n', '<leader>fD', function() require('telescope.builtin').git_status() end, { desc = 'git [D]iff' }) -- maybe different bind... -- very powerful for searching diffs
+set('n', '<leader>fG', function() require('telescope.builtin').git_status() end, { desc = '[G]it diff' })
 set('n', '<leader>fg', function() require('telescope.builtin').git_files() end, { desc = '[g]it files' })
 -- find with lsp
 set('n', '<leader>fs', function() require('telescope.builtin').lsp_document_symbols() end, { desc = 'document [s]ymbols' })
 set('n', '<leader>fS', function() require('telescope.builtin').lsp_workspace_symbols() end, { desc = 'workspace [S]ymbols' }) -- weirdly only has types, at least in rust-analyzer
 set('n', '<leader>fR', function() require('telescope.builtin').lsp_references() end, { desc = '[R]eferences' })
 set('n', '<leader>fi', function() require('telescope.builtin').lsp_implementations() end, { desc = '[i]mplementations' })
-set('n', '<leader>fd', function() require('telescope.builtin').diagnostics() end, { desc = '[d]iagnostics' })
+set('n', '<leader>fd', function() require('telescope.builtin').diagnostics { severity_limit = vim.diagnostic.severity.ERROR } end, { desc = 'error [d]iagnostics' })
+set('n', '<leader>fD', function() require('telescope.builtin').diagnostics() end, { desc = 'all [D]iagnostics' })
 
 -- reload config files
 -- todo: maybe add some bindings to open these files in new buffers with config as the root or lsp disabled
@@ -178,7 +179,9 @@ set('n', '<leader>rl', '<cmd>source $HOME/.config/nvim/lua/statusline.lua<cr>', 
 
 --- applications
 -- lazy
-set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'open [L]azy' }) -- will fail if lazy not loaded
+set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'open [L]azy' })
+-- lazy update
+set('n', '<leader>U', '<cmd>Lazy update<cr>', { desc = 'lazy [U]pdate' })
 -- alpha
 set({ 'n' }, '<leader>A', function() require('alpha').start(false) end, { desc = '[A]lpha' })
 -- terminal
