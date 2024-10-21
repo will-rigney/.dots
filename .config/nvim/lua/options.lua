@@ -31,8 +31,8 @@ vim.opt.softtabstop = 0 -- disable soft tab stop
 vim.opt.shiftwidth = 4 -- shift same as tab width
 
 -- scroll
-vim.opt.scrolloff = 2
-vim.opt.sidescrolloff = 12
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
 -- see also: neoscroll plugin
 
 -- completion
@@ -43,7 +43,7 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'noinsert', 'popup' } -- 
 
 -- window
 vim.opt.title = true -- enable window decoration title
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 vim.opt.signcolumn = 'yes' -- always display sign column
 vim.opt.splitbelow = true
 vim.opt.splitright = true
