@@ -88,6 +88,7 @@ many more todos littered in files, please grep at your pleasure
 
 ### todo list
 
+- [ ] always close hover completions on cursor movement / always close cmp completions window outside insert mode
 - [ ] make the telescope builtin keybinds more obvious for which-key
 - [ ] pin working versions of all plugins
 - [ ] editor_config support

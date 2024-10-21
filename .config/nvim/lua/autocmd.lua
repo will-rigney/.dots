@@ -9,7 +9,7 @@ local augroup = vim.api.nvim_create_augroup
 
 -- todo: should have custom autocmd in group, reset group & reload file
 
--- this should be used to remove and reinit existing autocmds
+-- todo: this should be used to remove and reinit existing autocmds
 augroup('custom-term', { clear = true })
 -- then use:
 -- group = augroup('custom-term-open', {}),
@@ -43,7 +43,9 @@ autocmd('TermClose', { pattern = 'term://*', callback = function() vim.api.nvim_
 
 -- diagnostics
 
--- vim.api.nvim_create_augroup('lsp_diagnostics_hold', { clear = true })
 -- would probably be better to have this added buffer locally on attach to lsp event
 -- show diagnostics under the cursor when holding position
--- autocmd({ 'CursorHold' }, { pattern = '*', callback = function() vim.diagnostic.open_float() end })
+-- augroup('lsp_diagnostics_hold', { clear = true })
+
+-- todo don't try and open if any pup / hover is already open
+autocmd({ 'CursorHold' }, { pattern = '*', callback = function() vim.diagnostic.open_float() end })

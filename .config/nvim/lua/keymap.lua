@@ -100,7 +100,7 @@ set('n', '<leader>bd', '<cmd>bp|bd #<cr>', { desc = '[d]elete' })
 set('n', '<leader>bc', '<cmd>enew<cr>', { desc = '[c]reate' })
 set('n', '<leader>bn', '<cmd>bnext<cr>', { desc = '[n]ext' })
 set('n', '<leader>bp', '<cmd>bprevious<cr>', { desc = '[p]revious' })
--- duplicate with h & l 
+-- duplicate with h & l
 set('n', '<leader>bl', '<cmd>bnext<cr>', { desc = '[n]ext' })
 set('n', '<leader>bh', '<cmd>bprevious<cr>', { desc = '[p]revious' })
 
