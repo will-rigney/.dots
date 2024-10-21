@@ -19,6 +19,9 @@
 # 	;;
 # esac
 
+# source profile
+source "$HOME"/.profile
+
 ## alias
 
 # fancy cursed ls

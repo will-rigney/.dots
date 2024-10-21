@@ -4,6 +4,9 @@
 
 # config sourced when running a login shell
 
+# source .profile
+source "$HOME"/.profile
+
 # PS1 (use starship instead anyway)
 PS1='[\u@\h \W]\$ '
 
@@ -12,3 +15,4 @@ PS1='[\u@\h \W]\$ '
 if [ "$(tty)" = "/dev/tty1" ]; then
 	XDG_SESSION_TYPE=wayland exec sway
 fi
+. $HOME/.local/share/swiftly/env.sh
