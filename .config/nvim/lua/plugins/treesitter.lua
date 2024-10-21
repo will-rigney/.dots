@@ -21,6 +21,7 @@ return {
 				'cpp',
 				'css',
 				'csv',
+				'djot',
 				'dockerfile',
 				'doxygen',
 				'elixir',
