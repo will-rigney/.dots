@@ -59,6 +59,7 @@ return {
 				'swift',
 				'toml',
 				'typescript',
+				'tsx',
 				'udev',
 				'vim',
 				'vimdoc',
