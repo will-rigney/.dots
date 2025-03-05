@@ -190,8 +190,13 @@ set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' })
 set({ 'n' }, '<leader>T', ':terminal<cr>', { desc = '[T]erminal' })
 set({ 'n' }, '<leader>G', ':terminal tig<cr>', { desc = 'ti[G]' })
 set({ 'n' }, '<leader>H', ':terminal htop<cr>', { desc = '[H]top' })
+
+-- clx not installed rn
+-- set({ 'n' }, '<leader>N', ':terminal clx<cr>', { desc = 'hacker [N]ews' })
+
 -- todo: kinda weird binding see how it goes, should somehow be more fancy
 set('n', '<leader><leader>', ':terminal ', { desc = 'run terminal command' })
+
 -- following needs to be set in plugin config in this weird format to facilitate lazy loading
 --- debug
 set('n', '<leader>db', function() require('dap').toggle_breakpoint() end, { desc = 'toggle [b]reakpoint' })
@@ -220,3 +225,9 @@ set('v', '<leader>gr', function() require('gitsigns').reset_hunk { vim.fn.line '
 set('n', '<leader>gR', function() require('gitsigns').reset_buffer() end, { desc = '[R]eset buffer' })
 set('n', '<leader>gt', function() require('gitsigns').toggle_signs() end, { desc = '[t]oggle signs' })
 
+-- tasks (collision with tab)
+-- probably run (collision with reload rn)
+-- set('n', '<leader>ra', function() require('telescope').extensions.vstask.tasks() end, { desc = 'tasks' })
+-- set('n', '<leader>ri', function() require('telescope').extensions.vstask.inputs() end, { desc = 'inputs' })
+-- set('n', '<leader>rh', function() require('telescope').extensions.vstask.history() end, { desc = 'history' })
+-- set('n', '<leader>rl', function() require('telescope').extensions.vstask.launch() end, { desc = 'launch' })

@@ -57,6 +57,13 @@ export PATH="$HOME/dev/marksman:$PATH"
 # kotlin language server (getting shambolic)
 export PATH="$HOME/dev/kotlin-language-server/server/build/install/server/bin:$PATH"
 
+## nvm 
+# requires ~/.nvm directory created by install script
+# for more information see: https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # source cargo env (path)
 . "$HOME/.cargo/env"
 
@@ -67,7 +74,6 @@ export PATH="$HOME/dev/kotlin-language-server/server/build/install/server/bin:$P
 alias cc='clang'
 
 ## man
-
 # fix bat man formatting issues
 export MANROFFOPT="-c"
 # use bat as manpager
@@ -77,3 +83,4 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p' --colour"
 
 # init starship prompt
 eval "$(starship init bash)";
+
