@@ -15,6 +15,8 @@ return {
 		'cpp',
 		'swift',
 		'typescript',
+		'javascript',
+		'astro',
 		'kotlin',
 		'json',
 		'rust',
@@ -181,8 +183,27 @@ return {
 		-- todo: .h currently recognised as cpp headers not c (might be fixed with compile_commands.json)
 		-- todo: tailwind server
 
-		-- not pictured: crystalline, configured in crystal.lua plugin file
+		lspconfig.sqls.setup {
+			on_attach = function(client, bufnr)
+				-- require('sqls').on_attach(client, bufnr) -- require sqls.nvim
+			end,
+			-- settings = {
+			-- 	sqls = {
+			-- 		connections = {
+			-- 			{
+			-- 				driver = 'postgresql',
+			-- 				dataSourceName = 'host=127.0.0.1 port=15432 user=postgres password=mysecretpassword1234 dbname=dvdrental sslmode=disable',
+			-- 			},
+			-- 		},
+			-- 	},
+			-- },
+		}
 
+		lspconfig.ts_ls.setup {}
+
+		lspconfig.tailwindcss.setup {}
+
+		-- not pictured: crystalline, configured in crystal.lua plugin file
 		-- todo: move crystalline config into the regular lspconfig to get reporing from LspInfo command configured servers list
 	end,
 }
