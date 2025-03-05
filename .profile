@@ -4,9 +4,6 @@
 
 # shell environment 
 
-# might not be needed with systemd/fedora
-# export "$(dbus-launch)"
-
 ## environment
 # editor is neovim
 export EDITOR="/usr/bin/nvim"
@@ -21,6 +18,5 @@ export MOZ_ENABLE_WAYLAND=1
 export CC="/usr/bin/clang"
 export CXX="/usr/bin/clang"
 
-# needed for ghidra / awt
-# apparently... todo: you know
+# needed for ghidra / awt on sway / wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
