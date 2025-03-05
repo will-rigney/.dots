@@ -190,7 +190,6 @@ set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' })
 set({ 'n' }, '<leader>T', ':terminal<cr>', { desc = '[T]erminal' })
 set({ 'n' }, '<leader>G', ':terminal tig<cr>', { desc = 'ti[G]' })
 set({ 'n' }, '<leader>H', ':terminal htop<cr>', { desc = '[H]top' })
-set({ 'n' }, '<leader>N', ':terminal clx<cr>', { desc = 'hacker [N]ews' })
 -- todo: kinda weird binding see how it goes, should somehow be more fancy
 set('n', '<leader><leader>', ':terminal ', { desc = 'run terminal command' })
 -- following needs to be set in plugin config in this weird format to facilitate lazy loading
