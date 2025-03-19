@@ -28,6 +28,7 @@ require 'diagnostics'
 require 'statusline'
 require 'keymap'
 require 'autocmd'
+require 'filetype'
 
 -- color scheme
 -- default is best rn
