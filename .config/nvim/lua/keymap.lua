@@ -187,9 +187,9 @@ set({ 'n' }, '<leader>A', function() require('alpha').start(false) end, { desc =
 -- terminal
 -- todo: review this terminal escape thing, flatten means no more nested terms so might be ok
 set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' })
-set({ 'n' }, '<leader>T', ':terminal<cr>', { desc = '[T]erminal' })
-set({ 'n' }, '<leader>G', ':terminal tig<cr>', { desc = 'ti[G]' })
-set({ 'n' }, '<leader>H', ':terminal htop<cr>', { desc = '[H]top' })
+set({ 'n' }, '<leader>T', '<cmd>terminal<cr>', { desc = '[T]erminal' })
+set({ 'n' }, '<leader>G', '<cmd>terminal tig<cr>', { desc = 'ti[G]' })
+set({ 'n' }, '<leader>H', '<cmd>terminal htop<cr>', { desc = '[H]top' })
 
 -- clx not installed rn
 -- set({ 'n' }, '<leader>N', ':terminal clx<cr>', { desc = 'hacker [N]ews' })
