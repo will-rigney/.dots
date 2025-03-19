@@ -199,9 +199,17 @@ return {
 			-- },
 		}
 
-		lspconfig.ts_ls.setup {}
+		lspconfig.ts_ls.setup {
+			capabilities = capabilities,
+		}
 
-		lspconfig.tailwindcss.setup {}
+		lspconfig.tailwindcss.setup {
+			capabilities = capabilities,
+		}
+
+		lspconfig.astro.setup {
+			capabilities = capabilities,
+		}
 
 		-- not pictured: crystalline, configured in crystal.lua plugin file
 		-- todo: move crystalline config into the regular lspconfig to get reporing from LspInfo command configured servers list
