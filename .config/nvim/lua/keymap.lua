@@ -167,7 +167,12 @@ set('n', '<leader>fs', function() require('telescope.builtin').lsp_document_symb
 set('n', '<leader>fS', function() require('telescope.builtin').lsp_workspace_symbols() end, { desc = 'workspace [S]ymbols' }) -- weirdly only has types, at least in rust-analyzer
 set('n', '<leader>fR', function() require('telescope.builtin').lsp_references() end, { desc = '[R]eferences' })
 set('n', '<leader>fi', function() require('telescope.builtin').lsp_implementations() end, { desc = '[i]mplementations' })
-set('n', '<leader>fd', function() require('telescope.builtin').diagnostics { severity_limit = vim.diagnostic.severity.ERROR } end, { desc = 'error [d]iagnostics' })
+set(
+	'n',
+	'<leader>fd',
+	function() require('telescope.builtin').diagnostics { severity_limit = vim.diagnostic.severity.ERROR } end,
+	{ desc = 'error [d]iagnostics' }
+)
 set('n', '<leader>fD', function() require('telescope.builtin').diagnostics() end, { desc = 'all [D]iagnostics' })
 
 -- reload config files
@@ -188,6 +193,7 @@ set({ 'n' }, '<leader>A', function() require('alpha').start(false) end, { desc =
 -- todo: review this terminal escape thing, flatten means no more nested terms so might be ok
 set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'escape terminal mode' })
 set({ 'n' }, '<leader>T', '<cmd>terminal<cr>', { desc = '[T]erminal' })
+set({ 'n' }, '<leader>E', '<cmd>b term://<cr>', { desc = 'open [E]xisting terminal buffer' })
 set({ 'n' }, '<leader>G', '<cmd>terminal tig<cr>', { desc = 'ti[G]' })
 set({ 'n' }, '<leader>H', '<cmd>terminal htop<cr>', { desc = '[H]top' })
 
@@ -225,9 +231,3 @@ set('v', '<leader>gr', function() require('gitsigns').reset_hunk { vim.fn.line '
 set('n', '<leader>gR', function() require('gitsigns').reset_buffer() end, { desc = '[R]eset buffer' })
 set('n', '<leader>gt', function() require('gitsigns').toggle_signs() end, { desc = '[t]oggle signs' })
 
--- tasks (collision with tab)
--- probably run (collision with reload rn)
--- set('n', '<leader>ra', function() require('telescope').extensions.vstask.tasks() end, { desc = 'tasks' })
--- set('n', '<leader>ri', function() require('telescope').extensions.vstask.inputs() end, { desc = 'inputs' })
--- set('n', '<leader>rh', function() require('telescope').extensions.vstask.history() end, { desc = 'history' })
--- set('n', '<leader>rl', function() require('telescope').extensions.vstask.launch() end, { desc = 'launch' })

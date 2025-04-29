@@ -67,7 +67,6 @@ return {
 				'zig',
 			},
 			sync_install = false,
-			-- todo: not sure if these are default values
 			highlight = { enable = true },
 			indent = { enable = true },
 		}
